@@ -1,3 +1,22 @@
+## FlClashForRoot — `root` branch
+
+This fork of [FlClash](https://github.com/chen08209/FlClash) adds Android Root transparent proxy support.
+
+- **Local and hotspot traffic:** proxy IPv4 TCP/UDP from selected apps and Wi-Fi hotspot clients, with separate switches for each scope. Existing profiles, routing rules and app selection are reused.
+- **Root and VPN modes:** keep the original VPN mode and choose which mode to run.
+- **Transparent proxy settings:** check Root authorization, view actual interception status, select the hotspot interface and restore network settings.
+- **Dashboard card:** switch the Root mode setting and open the transparent proxy settings page.
+- **Personalization:** enable “Hide quick start” to hide the floating start button, then long-press or right-click the **Dashboard navigation item** for the start/stop menu.
+- **Startup:** the disclaimer page and its confirmation flow have been removed.
+
+On a rooted Android device, open **Tools → Settings → Root transparent proxy** to configure the mode. The current implementation proxies IPv4; IPv6 is blocked for the selected scope. Reconnect existing hotspot clients after enabling hotspot interception so their network settings refresh.
+
+**Scheduled builds:** the `root` branch builds Android Release APKs every day at **03:00 Asia/Shanghai**, using the configured Release signing key. ARM32, ARM64 and universal APKs are available from [Actions artifacts](https://github.com/cyinsh666/FlClashForRoot/actions/workflows/android-root-release.yaml). The universal APK includes ARM32, ARM64 and x86_64.
+
+The documentation and download links below refer to the upstream FlClash project.
+
+---
+
 <div align="center">
 
 <img src="assets/images/icon.png" alt="FlClash" width="88">

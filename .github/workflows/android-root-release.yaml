@@ -1,0 +1,152 @@
+name: Android Root Release
+
+on:
+  schedule:
+    # UTC 19:00，即北京时间次日凌晨 03:00。
+    - cron: '0 19 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: android-root-release
+  cancel-in-progress: false
+
+env:
+  FLUTTER_VERSION: '3.47.6'
+  GO_VERSION: '1.27.1'
+  NDK_VERSION: r28c
+
+jobs:
+  android:
+    name: Signed ARM32, ARM64 and universal APKs
+    if: github.ref == 'refs/heads/root'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout root
+        uses: actions/checkout@v4
+        with:
+          ref: root
+          submodules: recursive
+          persist-credentials: false
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android platform and build tools
+        run: sdkmanager 'platforms;android-37' 'build-tools;37.0.0'
+
+      - name: Setup NDK
+        uses: nttld/setup-ndk@v1
+        id: ndk
+        with:
+          ndk-version: ${{ env.NDK_VERSION }}
+          link-to-sdk: true
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+          cache-dependency-path: core/go.sum
+
+      - name: Setup pinned Rust toolchain
+        run: |
+          toolchain="$(python3 -c 'import pathlib, tomllib; print(tomllib.loads(pathlib.Path("plugins/rust_api/rust/rust-toolchain.toml").read_text())["toolchain"]["channel"])')"
+          rustup toolchain install "$toolchain" --profile minimal
+          rustup target add --toolchain "$toolchain" aarch64-linux-android armv7-linux-androideabi x86_64-linux-android
+          echo "RUSTUP_TOOLCHAIN=$toolchain" >> "$GITHUB_ENV"
+
+      - name: Setup Rust cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          key: android-root-release
+          workspaces: plugins/rust_api/rust
+          cache-directories: .dart_tool/hooks_runner
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          cache: true
+
+      - name: Prepare Flutter and Gradle wrapper
+        run: |
+          flutter precache --android
+          flutter pub get
+          # Wrapper 启动文件未跟踪，保留仓库指定的 Gradle 版本。
+          wrapper="$FLUTTER_ROOT/bin/cache/artifacts/gradle_wrapper"
+          cp "$wrapper/gradlew" android/gradlew
+          cp "$wrapper/gradle/wrapper/gradle-wrapper.jar" android/gradle/wrapper/gradle-wrapper.jar
+          chmod +x android/gradlew
+
+      - name: Prepare required Release signing
+        id: signing
+        env:
+          KEYSTORE: ${{ secrets.KEYSTORE }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: python3 tool/android_root_release.py prepare
+
+      - name: Build ARM32 and ARM64 Release APKs
+        working-directory: android
+        env:
+          ANDROID_NDK_HOME: ${{ steps.ndk.outputs.ndk-path }}
+        run: |
+          ./gradlew --console=plain :app:assembleRelease \
+            -Ptarget-platform=android-arm,android-arm64,android-x64 \
+            -Ptarget=lib/main.dart -Pbase-application-name=android.app.Application \
+            -Psplit-per-abi=true -Pdart-defines=QVBQX0VOVj1zdGFibGU= \
+            -Pdart-obfuscation=false -Ptrack-widget-creation=false -Ptree-shake-icons=true \
+            -x :app:uploadCrashlyticsMappingFileRelease \
+            -x :app:uploadCrashlyticsSymbolFileRelease
+          mkdir -p ../dist/root-release
+          cp ../build/app/outputs/flutter-apk/app-armeabi-v7a-release.apk \
+            "../dist/root-release/FlClashForRoot-${{ steps.signing.outputs.version }}-armeabi-v7a-release.apk"
+          cp ../build/app/outputs/flutter-apk/app-arm64-v8a-release.apk \
+            "../dist/root-release/FlClashForRoot-${{ steps.signing.outputs.version }}-arm64-v8a-release.apk"
+
+      - name: Build universal Release APK
+        working-directory: android
+        env:
+          ANDROID_NDK_HOME: ${{ steps.ndk.outputs.ndk-path }}
+        run: |
+          ./gradlew --console=plain :app:assembleRelease \
+            -Ptarget-platform=android-arm,android-arm64,android-x64 \
+            -Ptarget=lib/main.dart -Pbase-application-name=android.app.Application \
+            -Psplit-per-abi=false -Pdart-defines=QVBQX0VOVj1zdGFibGU= \
+            -Pdart-obfuscation=false -Ptrack-widget-creation=false -Ptree-shake-icons=true \
+            -x :app:uploadCrashlyticsMappingFileRelease \
+            -x :app:uploadCrashlyticsSymbolFileRelease
+          cp ../build/app/outputs/flutter-apk/app-release.apk \
+            "../dist/root-release/FlClashForRoot-${{ steps.signing.outputs.version }}-universal-release.apk"
+
+      - name: Verify Release APKs and generate SHA256SUMS
+        run: python3 tool/android_root_release.py verify
+
+      - name: Upload signed APKs
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlClashForRoot-root-release-${{ github.run_number }}
+          path: |
+            dist/root-release/*.apk
+            dist/root-release/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+
+      - name: Remove signing material
+        if: always()
+        run: rm -f android/app/keystore.jks android/local.properties "$RUNNER_TEMP/root-release-cert.sha256"

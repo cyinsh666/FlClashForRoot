@@ -1,3 +1,22 @@
+## FlClashForRoot — `root` 分支功能
+
+本分支基于 [FlClash](https://github.com/chen08209/FlClash)，主要增加 Android Root 透明代理能力。
+
+- **本机与热点代理**：支持本机所选应用及 Wi-Fi 热点客户端的 IPv4 TCP/UDP 流量，两个接管范围可分别开启，复用原有配置、分流规则和应用选择设置。
+- **Root 与 VPN 模式**：保留原有 VPN 模式，可选择使用 Root 或 VPN，两种模式不同时运行。
+- **透明代理设置**：提供 Root 授权检查、实际接管状态、热点接口选择和网络恢复入口。
+- **仪表盘小卡片**：切换透明代理模式配置，点击卡片可进入设置页面。
+- **个性化快捷操作**：开启“隐藏快捷启动”后隐藏悬浮启动按钮，长按或右键**导航栏中的“仪表盘”**可弹出代理启停菜单。
+- **启动流程**：已移除免责声明页面及相关确认流程。
+
+使用时，在已 Root 的 Android 设备中打开**工具 → 设置 → Root 透明代理**进行配置。当前接管 IPv4，所选范围的 IPv6 会被阻断；开启热点接管后，已连接的客户端需要重新连接热点以刷新网络配置。
+
+**定时构建**：每天**北京时间凌晨 3 点**构建 `root` 分支的 Android Release 包，使用配置的 Release 签名。可在 [Actions 构建产物](https://github.com/cyinsh666/FlClashForRoot/actions/workflows/android-root-release.yaml)下载 ARM32、ARM64 和 universal 通用 APK，通用包包含 ARM32、ARM64 和 x86_64。
+
+以下为上游 FlClash 的原始说明及下载链接。
+
+---
+
 <div align="center">
 
 <img src="assets/images/icon.png" alt="FlClash" width="88">
