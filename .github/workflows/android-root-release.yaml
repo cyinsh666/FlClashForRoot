@@ -24,6 +24,9 @@ jobs:
     if: github.ref == 'refs/heads/root'
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    outputs:
+      source-sha: ${{ steps.source.outputs.sha }}
+      version: ${{ steps.signing.outputs.version }}
     steps:
       - name: Checkout root
         uses: actions/checkout@v4
@@ -31,6 +34,10 @@ jobs:
           ref: root
           submodules: recursive
           persist-credentials: false
+
+      - name: Record actual source revision
+        id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -148,7 +155,68 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           compression-level: 0
+          # 完整重跑时替换同一 run 的产物，单独重跑发布任务时仍能按原名称下载。
+          overwrite: true
 
       - name: Remove signing material
         if: always()
         run: rm -f android/app/keystore.jks android/local.properties "$RUNNER_TEMP/root-release-cert.sha256"
+
+  release:
+    name: Publish verified APKs to GitHub Release
+    needs: android
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - name: Download verified APKs
+        uses: actions/download-artifact@v4
+        with:
+          name: FlClashForRoot-root-release-${{ github.run_number }}
+          path: dist/root-release
+
+      - name: Publish complete Release
+        working-directory: dist/root-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_VERSION: ${{ needs.android.outputs.version }}
+          SOURCE_SHA: ${{ needs.android.outputs.source-sha }}
+          BUILD_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          set -euo pipefail
+          packages=(
+            "FlClashForRoot-${RELEASE_VERSION}-armeabi-v7a-release.apk"
+            "FlClashForRoot-${RELEASE_VERSION}-arm64-v8a-release.apk"
+            "FlClashForRoot-${RELEASE_VERSION}-universal-release.apk"
+          )
+          for package in "${packages[@]}"; do
+            test -s "$package"
+          done
+          sha256sum --strict --check SHA256SUMS
+
+          # 每次重跑使用独立标签，保留历史构建，避免覆盖已经下载的安装包。
+          release_date="$(TZ=Asia/Shanghai date +%Y%m%d)"
+          release_tag="root-${release_date}-${GITHUB_RUN_NUMBER}-${GITHUB_RUN_ATTEMPT}"
+          release_title="FlClashForRoot ${RELEASE_VERSION} · root · ${release_date} #${GITHUB_RUN_NUMBER}.${GITHUB_RUN_ATTEMPT}"
+          cat > "$RUNNER_TEMP/root-release-notes.md" <<EOF
+          Android Root 分支自动构建，版本 ${RELEASE_VERSION}。
+
+          - ARM32：下载 armeabi-v7a APK。
+          - ARM64：下载 arm64-v8a APK，适用于大多数 Android 手机。
+          - universal：通用 APK，包含 ARM32、ARM64 和 x86_64。
+          - 三种 APK 均通过 Release 签名、包名、版本及原生库架构校验，使用相同的正式签名。
+          - SHA256SUMS 可用于校验下载文件的完整性。
+
+          源码分支：root
+          源码提交：${SOURCE_SHA}
+          构建记录：${BUILD_URL}
+          EOF
+
+          gh release create "$release_tag" "${packages[@]}" SHA256SUMS \
+            --target "$SOURCE_SHA" --title "$release_title" \
+            --notes-file "$RUNNER_TEMP/root-release-notes.md" --draft
+          gh release edit "$release_tag" --draft=false --latest
+          release_url="$(gh release view "$release_tag" --json url --jq .url)"
+          echo "[下载本次 Release]($release_url)" >> "$GITHUB_STEP_SUMMARY"

@@ -11,7 +11,9 @@ This fork of [FlClash](https://github.com/chen08209/FlClash) adds Android Root t
 
 On a rooted Android device, open **Tools → Settings → Root transparent proxy** to configure the mode. The current implementation proxies IPv4; IPv6 is blocked for the selected scope. Reconnect existing hotspot clients after enabling hotspot interception so their network settings refresh.
 
-**Scheduled builds:** the `root` branch builds Android Release APKs every day at **03:00 Asia/Shanghai**, using the configured Release signing key. ARM32, ARM64 and universal APKs are available from [Actions artifacts](https://github.com/cyinsh666/FlClashForRoot/actions/workflows/android-root-release.yaml). The universal APK includes ARM32, ARM64 and x86_64.
+**Download this fork:** get ARM32, ARM64 and universal APKs from the [latest GitHub Release](https://github.com/cyinsh666/FlClashForRoot/releases/latest). The universal APK includes ARM32, ARM64 and x86_64.
+
+**Scheduled builds:** the `root` branch builds Android Release APKs every day at **03:00 Asia/Shanghai**, using the configured Release signing key. After all three APKs pass verification, they are automatically published to GitHub Releases with a SHA256 checksum file. Each build keeps its own Release; [Actions artifacts](https://github.com/cyinsh666/FlClashForRoot/actions/workflows/android-root-release.yaml) are also retained for 14 days.
 
 The documentation and download links below refer to the upstream FlClash project.
 

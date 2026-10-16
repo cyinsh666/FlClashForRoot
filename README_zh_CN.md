@@ -11,7 +11,9 @@
 
 使用时，在已 Root 的 Android 设备中打开**工具 → 设置 → Root 透明代理**进行配置。当前接管 IPv4，所选范围的 IPv6 会被阻断；开启热点接管后，已连接的客户端需要重新连接热点以刷新网络配置。
 
-**定时构建**：每天**北京时间凌晨 3 点**构建 `root` 分支的 Android Release 包，使用配置的 Release 签名。可在 [Actions 构建产物](https://github.com/cyinsh666/FlClashForRoot/actions/workflows/android-root-release.yaml)下载 ARM32、ARM64 和 universal 通用 APK，通用包包含 ARM32、ARM64 和 x86_64。
+**本分支下载**：在[最新 GitHub Release](https://github.com/cyinsh666/FlClashForRoot/releases/latest)下载 ARM32、ARM64 和 universal 通用 APK，通用包包含 ARM32、ARM64 和 x86_64。
+
+**定时构建**：每天**北京时间凌晨 3 点**构建 `root` 分支的 Android Release 包，使用配置的 Release 签名。三种 APK 全部校验通过后，自动发布到 GitHub Release，并提供 SHA256 校验文件。每次构建保留独立的 Release，[Actions 构建产物](https://github.com/cyinsh666/FlClashForRoot/actions/workflows/android-root-release.yaml)也会保留 14 天。
 
 以下为上游 FlClash 的原始说明及下载链接。
 
