@@ -117,8 +117,16 @@ def run_android_tool(tool, *arguments):
 def verify_apk(apk, abis, expected_version, expected_code, expected_certificate):
     """核对签名、正式包身份、版本和各 ABI 的完整原生库。"""
     signatures = run_android_tool('apksigner', 'verify', '--verbose', '--print-certs', apk)
-    certificates = re.findall(r'^Signer #[0-9]+ certificate SHA-256 digest: ([0-9a-fA-F]+)$', signatures, re.MULTILINE)
-    if len(certificates) != 1 or certificates[0].lower() != expected_certificate:
+    # Build Tools 37 按签名方案输出证书，同一证书可能在不同方案中重复出现。
+    certificates = {
+        digest.lower()
+        for digest in re.findall(
+            r'^(?:Signer #[0-9]+|V[0-9.]+ Signer:) certificate SHA-256 digest: ([0-9a-fA-F]+)$',
+            signatures,
+            re.MULTILINE,
+        )
+    }
+    if certificates != {expected_certificate}:
         raise RuntimeError(f'{apk.name} 的签名与提供的 Release 证书不一致')
     run_android_tool('zipalign', '-c', '-P', '16', '4', apk)
 
