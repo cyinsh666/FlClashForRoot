@@ -583,110 +583,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "discardChanges": MessageLookupByLibrary.simpleMessage(
       "Discard the changes?",
     ),
-    "disclaimer": MessageLookupByLibrary.simpleMessage("Disclaimer"),
-    "disclaimerAcceptContent": MessageLookupByLibrary.simpleMessage(
-      "By installing, copying, or using the Software, you are deemed to have read and agreed to this entire statement. If you disagree with any of its terms, stop using and uninstall the Software immediately.",
-    ),
-    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage("Acceptance"),
-    "disclaimerAnalyticsContent": MessageLookupByLibrary.simpleMessage(
-      "Basic app usage statistics are collected automatically with Firebase.\n\nWhat is collected: basic events such as first launch, app opens and session length, and app updates; an app instance ID; the device model, OS version, and system language; and an approximate country- or region-level location inferred from the IP address.\n\nPurpose: only to understand the number of active devices, version distribution, and OS compatibility. The developers do not use this data for advertising, do not sell it, and do not link it to your subscriptions or configurations.",
-    ),
-    "disclaimerAnalyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Analytics (usage statistics)",
-    ),
-    "disclaimerAndroidOnly": MessageLookupByLibrary.simpleMessage(
-      "Android only",
-    ),
-    "disclaimerChangesContent": MessageLookupByLibrary.simpleMessage(
-      "The developers may revise this statement with any release, and the revision takes effect when that release is published. Continuing to use the Software after updating means you accept the revised statement.",
-    ),
-    "disclaimerChangesTitle": MessageLookupByLibrary.simpleMessage(
-      "Changes to this statement",
-    ),
-    "disclaimerCrashlyticsContent": MessageLookupByLibrary.simpleMessage(
-      "When the app crashes, a crash report is uploaded automatically.\n\nWhat is collected: the crash stack trace and error message, the time of the crash, the app version and build number, the device brand and model, the Android version, screen orientation, free memory and storage, whether the device is rooted, and a random installation ID that is created on install and reset on reinstall.\n\nPurpose: only to locate and fix crashes.\n\nYou can turn it off at any time under \"Tools > General > Crash analytics\".",
-    ),
-    "disclaimerCrashlyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Crashlytics (crash analytics)",
-    ),
-    "disclaimerDataProcessingContent": MessageLookupByLibrary.simpleMessage(
-      "This data is processed and stored by Google on our behalf, may be transferred to servers outside your country or region (such as in the United States), and is governed by the Google Privacy Policy and the Firebase privacy and security documentation. Crash reports are kept for up to 90 days; statistics are kept under the Firebase default retention policy.",
-    ),
-    "disclaimerDesc": MessageLookupByLibrary.simpleMessage(
-      "Before using FlClash (\"the Software\"), please read this statement carefully and make sure you understand all of it. Tapping \"Agree\" means you have read, understood, and accept every term below. If you do not agree, tap \"Exit\" and stop using the Software.",
-    ),
-    "disclaimerFirebasePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Firebase privacy and security",
-    ),
-    "disclaimerGooglePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Google Privacy Policy",
-    ),
-    "disclaimerLiabilityContent": MessageLookupByLibrary.simpleMessage(
-      "To the maximum extent permitted by applicable law, neither the developers nor any contributor shall be liable for any direct, indirect, incidental, special, punitive, or consequential damages arising from the use of or inability to use the Software, including but not limited to data loss, device damage, network failures, business interruption, lost profits, or any resulting legal dispute, even if advised of the possibility of such damages.",
-    ),
-    "disclaimerLiabilityTitle": MessageLookupByLibrary.simpleMessage(
-      "Limitation of liability",
-    ),
-    "disclaimerLicenseContent": MessageLookupByLibrary.simpleMessage(
-      "The Software is open source under the GPL-3.0 license. You may use, modify, and distribute it freely as long as you comply with that license, which requires derivative works to be released under GPL-3.0 as well and the original copyright notices to be kept.\n\nThird-party components in the Software, including the Clash.Meta core, follow their own licenses. The original authors are not responsible for any issue arising from modified or redistributed versions.",
-    ),
-    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage(
-      "Open-source license",
-    ),
-    "disclaimerNoServiceStatement": MessageLookupByLibrary.simpleMessage(
-      "The Software itself does not provide any proxy server, node, subscription, or network access service, and has no partnership, agency, or guarantee relationship with any provider of such services.",
-    ),
-    "disclaimerPrivacyContent": MessageLookupByLibrary.simpleMessage(
-      "The Software does not collect or upload your subscription URLs, node details, configuration content, visited websites, connection records, traffic content, or logs. This data stays on your device and the developers have no access to it.\n\nThe Software only reaches the network when you use a feature that needs it, such as fetching the subscription URL you provided when updating a profile, or contacting GitHub when checking for updates.\n\nThe desktop versions (Windows, macOS, Linux) include no analytics or crash reporting service. The Android version includes the following two Google Firebase services to improve stability:",
-    ),
-    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage(
-      "Data collection and privacy",
-    ),
-    "disclaimerReadToEnd": MessageLookupByLibrary.simpleMessage(
-      "Read to the end",
-    ),
-    "disclaimerResponsibilityContent": MessageLookupByLibrary.simpleMessage(
-      "You are responsible for making sure that using the Software is lawful where you live, and you alone bear the legal responsibility for everything you do with it and its consequences.\n\nThe subscriptions, nodes, and configurations you import are your own choice. Whether their source is lawful, their content is safe, and their service is reliable is a matter between you and their providers.",
-    ),
-    "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage(
-      "Your responsibility",
-    ),
-    "disclaimerRestateHint": MessageLookupByLibrary.simpleMessage(
-      "Enter the statement above",
-    ),
-    "disclaimerRestateMismatch": MessageLookupByLibrary.simpleMessage(
-      "Does not match the statement",
-    ),
-    "disclaimerRestateTip": MessageLookupByLibrary.simpleMessage(
-      "To confirm you understand, enter the following statement in full in the field below:",
-    ),
-    "disclaimerRestateTitle": MessageLookupByLibrary.simpleMessage(
-      "Restate the statement",
-    ),
-    "disclaimerSoftwareContent": MessageLookupByLibrary.simpleMessage(
-      "The Software is an open-source network proxy client built on the Clash.Meta (mihomo) core. It only provides local tooling such as configuration management, rule-based routing, and traffic forwarding.",
-    ),
-    "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage(
-      "Nature of the software",
-    ),
-    "disclaimerThirdPartyContent": MessageLookupByLibrary.simpleMessage(
-      "Subscription links, configuration files, rule sets, scripts, external resources, and external links are all provided by third parties. The developers cannot and do not review or guarantee their legality, accuracy, security, or availability.\n\nAny data leak, financial loss, account ban, or other loss caused by third-party content is to be settled between you and the third party; the developers bear no responsibility for it.",
-    ),
-    "disclaimerThirdPartyTitle": MessageLookupByLibrary.simpleMessage(
-      "Third-party content",
-    ),
-    "disclaimerUsageContent": MessageLookupByLibrary.simpleMessage(
-      "The Software is intended only for non-commercial uses such as learning, exchange, and technical research. Using it for any commercial purpose is strictly prohibited, including but not limited to paid distribution, bundled sales, use as part of a commercial service, or doing business in the name of the Software. Any commercial activity is unrelated to the Software and its developers.\n\nUsing the Software for anything that violates the laws and regulations of your country or region is strictly prohibited, including but not limited to bypassing lawfully imposed network access restrictions, spreading illegal content, launching network attacks, or infringing the lawful rights of others.",
-    ),
-    "disclaimerUsageTitle": MessageLookupByLibrary.simpleMessage(
-      "Restrictions on use",
-    ),
-    "disclaimerWarrantyContent": MessageLookupByLibrary.simpleMessage(
-      "The Software is provided \"as is\" and \"as available\", without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, uninterrupted availability, freedom from errors, or freedom from security vulnerabilities.\n\nThe developers do not guarantee that the Software will meet your needs or that it will run without interruption or error.",
-    ),
-    "disclaimerWarrantyTitle": MessageLookupByLibrary.simpleMessage(
-      "No warranty",
-    ),
     "disconnected": MessageLookupByLibrary.simpleMessage("Disconnected"),
     "discoverNewVersion": MessageLookupByLibrary.simpleMessage(
       "New version found",
@@ -834,6 +730,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "hideFromList": MessageLookupByLibrary.simpleMessage("Hide from list"),
     "hideIp": MessageLookupByLibrary.simpleMessage("Hide IP"),
     "hidePassword": MessageLookupByLibrary.simpleMessage("Hide password"),
+    "hideQuickStart": MessageLookupByLibrary.simpleMessage("Hide quick start"),
+    "hideQuickStartDesc": MessageLookupByLibrary.simpleMessage(
+      "Use a dashboard long press instead",
+    ),
     "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage(
       "Hide timed-out proxies",
     ),
@@ -1220,6 +1120,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Password"),
     "paste": MessageLookupByLibrary.simpleMessage("Paste"),
     "peers": MessageLookupByLibrary.simpleMessage("Peers"),
+    "personalization": MessageLookupByLibrary.simpleMessage("Personalization"),
     "pickFromAlbum": MessageLookupByLibrary.simpleMessage("Choose from album"),
     "pinWindow": MessageLookupByLibrary.simpleMessage("Pin window"),
     "pleaseBindWebDAV": MessageLookupByLibrary.simpleMessage(
@@ -1384,6 +1285,112 @@ class MessageLookup extends MessageLookupByLibrary {
       "Restore successful",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "rootActive": MessageLookupByLibrary.simpleMessage("Traffic captured"),
+    "rootAddressPolicy": MessageLookupByLibrary.simpleMessage(
+      "IP address policy",
+    ),
+    "rootAddressPolicyDescription": MessageLookupByLibrary.simpleMessage(
+      "Root mode proxies IPv4 TCP/UDP and DNS in the selected scopes and blocks IPv6 there. IPv6 is not proxied. Unselected scopes keep their existing network behavior.",
+    ),
+    "rootCapabilities": MessageLookupByLibrary.simpleMessage(
+      "Root capability check result",
+    ),
+    "rootCheck": MessageLookupByLibrary.simpleMessage(
+      "Check Root access and capabilities",
+    ),
+    "rootConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
+      "Root proxy settings changed; restart the proxy to apply them",
+    ),
+    "rootConfigDescription": MessageLookupByLibrary.simpleMessage(
+      "Start the proxy from the dashboard after saving, or use the restart notice while running. Root and VPN modes are mutually exclusive; VPN settings are retained for switching back.",
+    ),
+    "rootDashboardStatus": MessageLookupByLibrary.simpleMessage(
+      "Transparent proxy",
+    ),
+    "rootDownstream": MessageLookupByLibrary.simpleMessage(
+      "Hotspot interfaces and subnets",
+    ),
+    "rootHotspotInterface": MessageLookupByLibrary.simpleMessage(
+      "Hotspot interface",
+    ),
+    "rootHotspotInterfaceDescription": MessageLookupByLibrary.simpleMessage(
+      "Leave empty to detect automatically, or enter a name such as ap0",
+    ),
+    "rootHotspotSettings": MessageLookupByLibrary.simpleMessage(
+      "Open system hotspot settings",
+    ),
+    "rootHotspotSettingsUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Unable to open hotspot settings; open them in system settings",
+    ),
+    "rootInactive": MessageLookupByLibrary.simpleMessage(
+      "Traffic not captured",
+    ),
+    "rootInterfaceInvalid": MessageLookupByLibrary.simpleMessage(
+      "Use up to 15 letters, digits, or _ . : - for the interface name",
+    ),
+    "rootMaintenance": MessageLookupByLibrary.simpleMessage(
+      "Checks and recovery",
+    ),
+    "rootNeedsRepair": MessageLookupByLibrary.simpleMessage(
+      "A Root session needs cleanup",
+    ),
+    "rootNotDetected": MessageLookupByLibrary.simpleMessage("Not detected"),
+    "rootPhaseActive": MessageLookupByLibrary.simpleMessage("Running"),
+    "rootPhaseCleanupFailed": MessageLookupByLibrary.simpleMessage(
+      "Network recovery is incomplete",
+    ),
+    "rootPhaseFailed": MessageLookupByLibrary.simpleMessage(
+      "Root traffic capture failed",
+    ),
+    "rootPhaseStarting": MessageLookupByLibrary.simpleMessage(
+      "Preparing Root traffic capture",
+    ),
+    "rootPhaseStopped": MessageLookupByLibrary.simpleMessage("Stopped"),
+    "rootPhaseWaitingHotspot": MessageLookupByLibrary.simpleMessage(
+      "Waiting for the hotspot to turn on",
+    ),
+    "rootPhaseWaitingHotspotRestart": MessageLookupByLibrary.simpleMessage(
+      "Hotspot traffic is not captured yet",
+    ),
+    "rootProxy": MessageLookupByLibrary.simpleMessage("Root transparent proxy"),
+    "rootProxyDescription": MessageLookupByLibrary.simpleMessage(
+      "Proxy this device and hotspot clients",
+    ),
+    "rootProxyEnable": MessageLookupByLibrary.simpleMessage(
+      "Enable Root transparent proxy",
+    ),
+    "rootProxyHotspot": MessageLookupByLibrary.simpleMessage("Hotspot traffic"),
+    "rootProxyLocal": MessageLookupByLibrary.simpleMessage("Device traffic"),
+    "rootProxyLocalDescription": MessageLookupByLibrary.simpleMessage(
+      "Uses app access control for local apps only",
+    ),
+    "rootRefreshStatus": MessageLookupByLibrary.simpleMessage(
+      "Refresh Root status",
+    ),
+    "rootRepair": MessageLookupByLibrary.simpleMessage(
+      "Stop the proxy and restore the network",
+    ),
+    "rootRepairCompleted": MessageLookupByLibrary.simpleMessage(
+      "Network recovery completed",
+    ),
+    "rootRepairDescription": MessageLookupByLibrary.simpleMessage(
+      "Network recovery first stops the current proxy, then removes Root rules and routes created by FlClash.",
+    ),
+    "rootSelectScopeTip": MessageLookupByLibrary.simpleMessage(
+      "Select device traffic, hotspot traffic, or both",
+    ),
+    "rootSessionStatus": MessageLookupByLibrary.simpleMessage("Root session"),
+    "rootSettingsSaveFailed": MessageLookupByLibrary.simpleMessage(
+      "Failed to save Root proxy settings",
+    ),
+    "rootStatusReadFailed": MessageLookupByLibrary.simpleMessage(
+      "Failed to read Root status",
+    ),
+    "rootStatusUnknown": MessageLookupByLibrary.simpleMessage("Unknown status"),
+    "rootStopFailed": MessageLookupByLibrary.simpleMessage(
+      "The proxy has not fully stopped; retry network recovery shortly",
+    ),
+    "rootUpstream": MessageLookupByLibrary.simpleMessage("Upstream network"),
     "routeAddress": MessageLookupByLibrary.simpleMessage("Route addresses"),
     "routeExcludeAddress": MessageLookupByLibrary.simpleMessage(
       "Route exclude addresses",

@@ -34,9 +34,15 @@ class _VpnContainerState extends ConsumerState<VpnManager> {
     );
   }
 
+  /// 根据期望模式和当前运行模式展示对应的重启提醒。
   void _showRestartTip() {
+    final rootRelated =
+        ref.read(vpnOptionsProvider).value?.rootEnabled == true ||
+        ref.read(runningVpnOptionsProvider)?.rootEnabled == true;
     dialogs.showNotifier(
-      currentAppLocalizations.vpnConfigChangeDetected,
+      rootRelated
+          ? currentAppLocalizations.rootConfigChangeDetected
+          : currentAppLocalizations.vpnConfigChangeDetected,
       level: MessageLevel.warning,
       actionState: MessageActionState(
         actionText: currentAppLocalizations.restart,

@@ -347,6 +347,9 @@ abstract class MakeRealProfileState with _$MakeRealProfileState {
     @Default({}) Map<String, dynamic> injectedRuleProviders,
     String? matchTarget,
     @Default(false) bool safeMode,
+
+    /// Root 接管 DNS 时，配置必须保留内核解析能力。
+    @Default(false) bool rootProxy,
   }) = _MakeRealProfileState;
 }
 

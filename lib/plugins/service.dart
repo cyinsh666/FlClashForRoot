@@ -123,6 +123,40 @@ class Service {
         '';
   }
 
+  /// 读取原生 Root 会话快照，配置开关不代表流量已被接管。
+  Future<Map<String, Object?>> rootStatus() async {
+    final status = await methodChannel.invokeMapMethod<String, Object?>(
+      'rootStatus',
+    );
+    return status ?? const {};
+  }
+
+  /// 检查 Root 授权和内核能力，返回原生能力摘要。
+  Future<String> rootCheck() async {
+    return await methodChannel.invokeMethod<String>('rootCheck') ?? '';
+  }
+
+  /// 由原生生命周期锁确认停止后清理残留规则，空字符串表示成功。
+  Future<String> rootRepair() async {
+    return await methodChannel.invokeMethod<String>('rootRepair') ?? '';
+  }
+
+  /// 等待原生 Root 停止事务完成，供统一生命周期在销毁 TUN 前使用。
+  Future<bool> stopRoot() async {
+    _startRequested = false;
+    return await methodChannel.invokeMethod<bool>(
+          'rootStop',
+          ++_commandRevision,
+        ) ??
+        false;
+  }
+
+  /// 打开 Android 热点设置，热点的启停仍由系统管理。
+  Future<bool> rootHotspotSettings() async {
+    return await methodChannel.invokeMethod<bool>('rootHotspotSettings') ??
+        false;
+  }
+
   Future<bool> shutdown() async {
     return await methodChannel.invokeMethod<bool>('shutdown') ?? true;
   }

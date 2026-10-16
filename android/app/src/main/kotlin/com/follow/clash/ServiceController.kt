@@ -14,12 +14,18 @@ import com.follow.clash.service.ManagedService
 import com.follow.clash.service.ProxyService
 import com.follow.clash.service.ServiceConfig
 import com.follow.clash.service.VpnService
+import com.follow.clash.service.models.ServiceMode
 import com.follow.clash.service.models.VpnOptions
+import com.follow.clash.service.models.serviceMode
+import com.follow.clash.service.root.RootProxyRecovery
+import com.follow.clash.service.root.RootProxyService
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runInterruptible
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -43,6 +49,7 @@ object ServiceController {
     // The Core listens exactly while a run exists, so every path that ends one closes it.
     private fun release() {
         clearBinding()
+        ServiceConfig.rootFailure = null
         runtime = null
         Core.stopListener()
     }
@@ -68,26 +75,40 @@ object ServiceController {
         Core.updateEventListener(callback)
     }
 
+    /** 只绑定一种服务，旧 Root 规则清理成功后才能交给新模式接管。 */
     suspend fun start(options: VpnOptions): Boolean = lock.withLock {
         ServiceConfig.updateVpnOptions(options)
-        val nextIntent = if (options.enable) {
-            VpnService::class.intent
-        } else {
-            ProxyService::class.intent
+        val nextIntent = when (options.serviceMode) {
+            ServiceMode.VPN -> VpnService::class.intent
+            ServiceMode.PROXY -> ProxyService::class.intent
+            ServiceMode.ROOT -> RootProxyService::class.intent
         }
 
-        if (binding?.component != nextIntent.component) {
+        if (binding?.component != nextIntent.component || runtime?.cleanupPending == true) {
             if (binding != null) {
                 tearDownServices()
             }
+            // 进程重启后恢复文件仍可能存在；普通 VPN 仅在确有残留时才需要 Root。
+            if (options.serviceMode != ServiceMode.ROOT) {
+                repairPendingRoot()
+            }
+            val requestToken = ServiceState.captureRequestToken()
             lateinit var nextBinding: ManagedServiceBinding
             nextBinding = ManagedServiceBinding(nextIntent) { message ->
-                handleServiceDisconnected(nextBinding, message)
+                handleServiceDisconnected(nextBinding, message, requestToken)
             }
             binding = nextBinding
+            if (options.serviceMode == ServiceMode.ROOT) {
+                ServiceConfig.rootFailure = { message ->
+                    handleRootFailure(nextBinding, requestToken, message)
+                }
+            } else {
+                ServiceConfig.rootFailure = null
+            }
             nextBinding.bind().onFailure { error ->
                 GlobalState.log("Unable to bind background service: $error")
                 release()
+                if (options.serviceMode == ServiceMode.ROOT) throw error
                 return@withLock false
             }
         }
@@ -96,32 +117,59 @@ object ServiceController {
         val result = currentBinding.useService { service -> service.start() }
         if (result.isFailure) {
             GlobalState.log("Unable to start background service: ${result.exceptionOrNull()}")
-            currentBinding.stopIfConnected()
-                .onFailure { error ->
-                    GlobalState.log("Unable to clean up failed background service start: $error")
-                }
+            val cleanup = currentBinding.stopIfConnected()
+            cleanup.onFailure { error ->
+                GlobalState.log("Unable to clean up failed background service start: $error")
+            }
+            if (options.serviceMode == ServiceMode.ROOT && cleanup.isFailure) {
+                throw retainRootCleanupFailure(cleanup.exceptionOrNull())
+            }
             release()
+            if (options.serviceMode == ServiceMode.ROOT) {
+                throw requireNotNull(result.exceptionOrNull())
+            }
             return@withLock false
         }
 
         Core.startListener()
         runtime = ServiceRuntime(
-            vpn = options.enable,
+            mode = options.serviceMode,
             startedAtMillis = runtime?.startedAtMillis ?: System.currentTimeMillis(),
         )
         true
     }
 
+    /** 撤销实际服务和遗留路由后，才能释放 Core 的监听资源。 */
     suspend fun stop() = lock.withLock {
         tearDownServices()
+        // 绑定丢失后仍须等恢复记录清理完成，Root 停止屏障才能放行关闭 Core。
+        repairPendingRoot()
         release()
     }
 
+    /** 只关闭系统额外创建的空 VPN，不触碰当前绑定的服务。 */
+    suspend fun stopUnmanagedVpn(): Unit = lock.withLock {
+        if (runtime?.mode != ServiceMode.VPN &&
+            binding?.component != VpnService::class.intent.component
+        ) {
+            GlobalState.application.stopService(VpnService::class.intent)
+        }
+    }
+
+    /** Root 清理失败需要保留重试端点，其它服务延续原有停止语义。 */
     private suspend fun tearDownServices() {
-        binding?.useService { service -> service.stop() }
-            ?.onFailure { error ->
-                GlobalState.log("Unable to stop background service: $error")
-            }
+        val rootBinding = binding?.component == RootProxyService::class.intent.component
+        val stopResult = if (rootBinding) {
+            binding?.stopIfConnected()
+        } else {
+            binding?.useService { service -> service.stop() }
+        }
+        stopResult?.onFailure { error ->
+            GlobalState.log("Unable to stop background service: $error")
+        }
+        if (rootBinding && stopResult?.isFailure == true) {
+            throw retainRootCleanupFailure(stopResult.exceptionOrNull())
+        }
         clearBinding()
         stopServices()
     }
@@ -130,7 +178,11 @@ object ServiceController {
     // after the process was killed — outlives every binding this process holds, so
     // unbinding alone leaves the tunnel up while the app reports it stopped.
     private fun stopServices() {
-        listOf(VpnService::class.intent, ProxyService::class.intent).forEach { intent ->
+        listOf(
+            VpnService::class.intent,
+            ProxyService::class.intent,
+            RootProxyService::class.intent,
+        ).forEach { intent ->
             runCatching { GlobalState.application.stopService(intent) }
                 .onFailure { error ->
                     GlobalState.log("Unable to stop ${intent.component?.className}: $error")
@@ -138,22 +190,81 @@ object ServiceController {
         }
     }
 
+    /** 系统规则清理失败时保留绑定和资源归属，不能继续启动另一种模式。 */
+    private fun retainRootCleanupFailure(error: Throwable?): IllegalStateException {
+        runtime = ServiceRuntime(
+            mode = ServiceMode.ROOT,
+            startedAtMillis = runtime?.startedAtMillis ?: System.currentTimeMillis(),
+            cleanupPending = true,
+        )
+        val message = error?.message ?: "Root 代理规则清理失败，请重试停止或恢复网络"
+        GlobalState.log("RootProxy 清理失败=$message")
+        return IllegalStateException(message, error)
+    }
+
+    /** 即使原进程的绑定已经丢失，恢复失败仍须保留 Root 资源归属。 */
+    private suspend fun repairPendingRoot() {
+        if (!RootProxyRecovery.hasPending(GlobalState.application)) return
+        try {
+            runInterruptible(Dispatchers.IO) {
+                RootProxyRecovery.repair(GlobalState.application)
+            }
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            throw retainRootCleanupFailure(error)
+        }
+    }
+
+    /** 先确认失败仍属于当前绑定，再让状态机撤回对应的启动意图。 */
+    private fun handleRootFailure(
+        failedBinding: ManagedServiceBinding,
+        token: RunRequest,
+        message: String,
+    ) {
+        GlobalState.launch {
+            val isCurrentBinding = lock.withLock { binding === failedBinding }
+            if (isCurrentBinding) {
+                ServiceState.handleRootFailure(token, message)
+            }
+        }
+    }
+
+    /** Root 异常断绑先清理系统接管规则，失败时保留资源归属。 */
     private fun handleServiceDisconnected(
         disconnectedBinding: ManagedServiceBinding,
         message: String,
+        rootRequestToken: RunRequest,
     ) {
-        val token = ServiceState.captureRequestToken()
+        val isRoot = disconnectedBinding.component == RootProxyService::class.intent.component
+        val token = if (isRoot) rootRequestToken else ServiceState.captureRequestToken()
         GlobalState.launch {
+            var rootFailure: String? = null
             val wasCurrent = lock.withLock {
                 if (binding !== disconnectedBinding) {
                     return@withLock false
                 }
                 GlobalState.log("Background service disconnected: $message")
+                if (isRoot) {
+                    try {
+                        disconnectedBinding.stopIfConnected().getOrThrow()
+                        repairPendingRoot()
+                        stopServices()
+                    } catch (error: Exception) {
+                        rootFailure = retainRootCleanupFailure(error).message
+                        return@withLock true
+                    }
+                }
                 release()
                 true
             }
             if (wasCurrent) {
-                ServiceState.handleServiceLost(token)
+                val failure = rootFailure
+                if (failure == null) {
+                    ServiceState.handleServiceLost(token)
+                } else {
+                    ServiceState.handleRootFailure(token, failure)
+                }
             }
         }
     }
@@ -167,6 +278,10 @@ private class ManagedServiceBinding(
         get() = intent.component
 
     private val serviceState = MutableStateFlow<Result<ManagedService>?>(null)
+
+    // 同进程 Binder 失联后仍保留清理端点，Root 规则撤销失败时允许再次停止。
+    @Volatile
+    private var lastConnectedService: ManagedService? = null
 
     @Volatile
     private var isBound = false
@@ -195,8 +310,9 @@ private class ManagedServiceBinding(
         }
     }
 
+    /** 绑定失联时仍可调用同进程清理端点，不必等待一次不可能完成的重连。 */
     suspend fun stopIfConnected(): Result<Unit> = runCatching {
-        val service = serviceState.value?.getOrNull() ?: return@runCatching
+        val service = lastConnectedService ?: return@runCatching
         withContext(Dispatchers.Default) {
             service.stop()
         }
@@ -204,6 +320,7 @@ private class ManagedServiceBinding(
 
     fun unbind() {
         serviceState.value = null
+        lastConnectedService = null
         if (!isBound) return
         isBound = false
         Handler(Looper.getMainLooper()).post {
@@ -220,10 +337,12 @@ private class ManagedServiceBinding(
             when (binder) {
                 is VpnService.LocalBinder -> binder.service
                 is ProxyService.LocalBinder -> binder.service
+                is RootProxyService.LocalBinder -> binder.service
                 null -> error("Binder is empty")
                 else -> error("Unsupported service binder: ${binder.javaClass.name}")
             }
         }.onSuccess { service ->
+            lastConnectedService = service
             serviceState.value = Result.success(service)
         }.onFailure { error ->
             disconnect(error.message.orEmpty())

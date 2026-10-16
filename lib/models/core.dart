@@ -59,6 +59,11 @@ abstract class VpnOptions with _$VpnOptions {
     @Default([]) List<String> routeAddress,
     @Default(0) int mtu,
     @Default('') String congestionController,
+    // 原生服务据此选择 Root 会话，不能由 VPN enable 字段推断。
+    @Default(false) bool rootEnabled,
+    @Default(true) bool rootLocal,
+    @Default(true) bool rootHotspot,
+    @Default('') String rootInterface,
   }) = _VpnOptions;
 
   factory VpnOptions.fromJson(Map<String, Object?> json) =>
@@ -66,8 +71,22 @@ abstract class VpnOptions with _$VpnOptions {
 }
 
 extension VpnOptionsExt on VpnOptions {
-  /// Only what `ServiceController.start` and `VpnService.handleStart` read.
+  /// 仅比较当前运行模式实际读取的参数，决定是否需要重启服务。
   VpnOptions get effective {
+    // Root 使用独立的 TUN 和路由会话，VPN 的系统代理参数不会参与启动。
+    if (rootEnabled) {
+      return copyWith(
+        enable: false,
+        port: 0,
+        ipv6: false,
+        dnsHijacking: false,
+        allowBypass: false,
+        systemProxy: false,
+        bypassDomain: const [],
+        rootInterface: rootHotspot ? rootInterface : '',
+        accessControlProps: _effectiveAccessControl(accessControlProps),
+      );
+    }
     if (!enable) {
       return const VpnOptions(
         enable: false,
@@ -81,21 +100,27 @@ extension VpnOptionsExt on VpnOptions {
         stack: '',
       );
     }
-    final accessControl = accessControlProps;
-    final accepts = accessControl.mode == AccessControlMode.acceptSelected;
     return copyWith(
       port: systemProxy ? port : 0,
       bypassDomain: systemProxy ? bypassDomain : const [],
-      accessControlProps: accessControl.enable
-          ? AccessControlProps(
-              enable: true,
-              mode: accessControl.mode,
-              acceptList: accepts ? accessControl.acceptList : const [],
-              rejectList: accepts ? const [] : accessControl.rejectList,
-            )
-          : const AccessControlProps(),
+      accessControlProps: _effectiveAccessControl(accessControlProps),
+      rootLocal: true,
+      rootHotspot: true,
+      rootInterface: '',
     );
   }
+}
+
+/// 仅比较当前过滤模式实际使用的应用列表，排序和搜索不触发服务重启。
+AccessControlProps _effectiveAccessControl(AccessControlProps accessControl) {
+  if (!accessControl.enable) return const AccessControlProps();
+  final accepts = accessControl.mode == AccessControlMode.acceptSelected;
+  return AccessControlProps(
+    enable: true,
+    mode: accessControl.mode,
+    acceptList: accepts ? accessControl.acceptList : const [],
+    rejectList: accepts ? const [] : accessControl.rejectList,
+  );
 }
 
 @freezed

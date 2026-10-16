@@ -95,6 +95,7 @@ type SetupParams struct {
 	SelectedMap    map[string]string `json:"selected-map"`
 	TestURL        string            `json:"test-url"`
 	SkipCertVerify bool              `json:"skip-cert-verify"`
+	RootProxy      bool              `json:"root-proxy,omitempty"`
 }
 
 type UpdateParams struct {

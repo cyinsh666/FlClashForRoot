@@ -26,7 +26,26 @@ data class VpnOptions(
     val routeAddress: List<String>,
     val mtu: Int = 0,
     val congestionController: String? = null,
+    val rootEnabled: Boolean = false,
+    val rootLocal: Boolean = true,
+    val rootHotspot: Boolean = true,
+    val rootInterface: String = "",
 )
+
+/** 区分运行中的服务，避免普通代理与 Root 模式共用 enable=false 时被误认为相同。 */
+enum class ServiceMode {
+    PROXY,
+    VPN,
+    ROOT,
+}
+
+/** Root 模式优先，仅影响当前服务选择，不覆盖用户保存的 VPN 开关。 */
+val VpnOptions.serviceMode: ServiceMode
+    get() = when {
+        rootEnabled -> ServiceMode.ROOT
+        enable -> ServiceMode.VPN
+        else -> ServiceMode.PROXY
+    }
 
 private const val DEFAULT_TUN_MTU = 9000
 

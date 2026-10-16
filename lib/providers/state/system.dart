@@ -234,6 +234,7 @@ Future<List<String>> vpnRouteAddress(Ref ref) {
   return routes.vpnRouteAddress(bypassPrivateRoute: bypassPrivateRoute);
 }
 
+/// 汇总 Android 服务启动参数，Root 与系统 VPN 在有效配置中互斥。
 @Riverpod(keepAlive: true)
 Future<VpnOptions> vpnOptions(Ref ref) async {
   final networkSetting = ref.watch(
@@ -253,8 +254,14 @@ Future<VpnOptions> vpnOptions(Ref ref) async {
   final safeMode = ref.watch(safeModeProvider);
   final routeAddress = ref.watch(vpnRouteAddressProvider.future);
   final tun = clashConfig.tun;
+  // Root 只在 Android 正常模式且至少选择一个接管范围时进入原生服务。
+  final rootEnabled =
+      system.isAndroid &&
+      !safeMode &&
+      vpnSetting.rootEnabled &&
+      (vpnSetting.rootLocal || vpnSetting.rootHotspot);
   return VpnOptions(
-    enable: vpnSetting.enable && !safeMode,
+    enable: vpnSetting.enable && !rootEnabled && !safeMode,
     stack: tun.stack.name,
     // VpnService.setHttpProxy cannot carry credentials, so an authenticated
     // mixed port is left to TUN instead of declared as the system proxy.
@@ -269,6 +276,10 @@ Future<VpnOptions> vpnOptions(Ref ref) async {
     routeAddress: await routeAddress,
     mtu: tun.mtu,
     congestionController: tun.congestionController,
+    rootEnabled: rootEnabled,
+    rootLocal: vpnSetting.rootLocal,
+    rootHotspot: vpnSetting.rootHotspot,
+    rootInterface: vpnSetting.rootInterface,
   );
 }
 

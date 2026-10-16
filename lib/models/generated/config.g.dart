@@ -37,11 +37,10 @@ _AppSettingProps _$AppSettingPropsFromJson(
       ) ??
       TabAnimation.slide,
   floatingNavigationBar: json['floatingNavigationBar'] as bool? ?? true,
+  hideQuickStart: json['hideQuickStart'] as bool? ?? false,
   autoCheckUpdate: json['autoCheckUpdate'] as bool? ?? true,
   sidebarExpanded:
       _readSidebarExpanded(json, 'sidebarExpanded') as bool? ?? true,
-  acceptedDisclaimerVersion:
-      (json['acceptedDisclaimerVersion'] as num?)?.toInt() ?? 0,
   crashlyticsTip: json['crashlyticsTip'] as bool? ?? false,
   crashlytics: json['crashlytics'] as bool? ?? false,
   minimizeOnExit: json['minimizeOnExit'] as bool? ?? true,
@@ -96,9 +95,9 @@ Map<String, dynamic> _$AppSettingPropsToJson(_AppSettingProps instance) =>
       'testUrl': instance.testUrl,
       'tabAnimation': _$TabAnimationEnumMap[instance.tabAnimation]!,
       'floatingNavigationBar': instance.floatingNavigationBar,
+      'hideQuickStart': instance.hideQuickStart,
       'autoCheckUpdate': instance.autoCheckUpdate,
       'sidebarExpanded': instance.sidebarExpanded,
-      'acceptedDisclaimerVersion': instance.acceptedDisclaimerVersion,
       'crashlyticsTip': instance.crashlyticsTip,
       'crashlytics': instance.crashlytics,
       'minimizeOnExit': instance.minimizeOnExit,
@@ -150,6 +149,7 @@ const _$DashboardWidgetEnumMap = {
   DashboardWidget.runTime: 'runTime',
   DashboardWidget.proxyGroups: 'proxyGroups',
   DashboardWidget.profiles: 'profiles',
+  DashboardWidget.rootProxyStatus: 'rootProxyStatus',
 };
 
 _AccessControlProps _$AccessControlPropsFromJson(Map<String, dynamic> json) =>
@@ -225,6 +225,10 @@ _VpnProps _$VpnPropsFromJson(Map<String, dynamic> json) => _VpnProps(
       : AccessControlProps.fromJson(
           json['accessControlProps'] as Map<String, dynamic>,
         ),
+  rootEnabled: json['rootEnabled'] as bool? ?? false,
+  rootLocal: json['rootLocal'] as bool? ?? true,
+  rootHotspot: json['rootHotspot'] as bool? ?? true,
+  rootInterface: json['rootInterface'] as String? ?? '',
 );
 
 Map<String, dynamic> _$VpnPropsToJson(_VpnProps instance) => <String, dynamic>{
@@ -234,6 +238,10 @@ Map<String, dynamic> _$VpnPropsToJson(_VpnProps instance) => <String, dynamic>{
   'allowBypass': instance.allowBypass,
   'dnsHijacking': instance.dnsHijacking,
   'accessControlProps': instance.accessControlProps,
+  'rootEnabled': instance.rootEnabled,
+  'rootLocal': instance.rootLocal,
+  'rootHotspot': instance.rootHotspot,
+  'rootInterface': instance.rootInterface,
 };
 
 _AuthenticationProps _$AuthenticationPropsFromJson(Map<String, dynamic> json) =>

@@ -3,7 +3,9 @@ package com.follow.clash
 import com.follow.clash.common.RunIntentArbiter
 import com.follow.clash.models.SharedState
 import com.follow.clash.service.models.NotificationParams
+import com.follow.clash.service.models.ServiceMode
 import com.follow.clash.service.models.VpnOptions
+import com.follow.clash.service.models.serviceMode
 import com.google.gson.Gson
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
@@ -54,6 +56,10 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
     @Volatile
     private var pendingVpnPreparation: (() -> Unit)? = null
 
+    // Root 授权不占用转换锁，停止操作通过取消任务中断 su 等待。
+    @Volatile
+    private var pendingRootPreparation: Deferred<String>? = null
+
     @Volatile
     private var transition: RunState? = null
 
@@ -71,7 +77,8 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
     }
 
     suspend fun awaitRunTime(): Long = transitionLock.withLock {
-        host.runtime?.startedAtMillis?.takeIf { isRunRequested } ?: 0L
+        val runtime = host.runtime
+        runtime?.takeIf { isRunRequested && !it.cleanupPending }?.startedAtMillis ?: 0L
     }
 
     fun captureRequestToken(): RunRequest = arbiter.current()
@@ -104,6 +111,20 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
         startFromPreferences()
     }
 
+    /** Android Always-on 表示 VPN 意图，Root 模式不能把它解释成 Root 启动。 */
+    suspend fun handleVpnStartAction() {
+        val options = if (host.tile() == null && !isRunRequested) {
+            host.loadSharedState().vpnOptions
+        } else {
+            sharedState.vpnOptions
+        }
+        if (host.runtime?.mode == ServiceMode.ROOT || options?.serviceMode == ServiceMode.ROOT) {
+            host.stopUnmanagedVpn()
+            return
+        }
+        handleStartAction()
+    }
+
     suspend fun handleStopAction() {
         if (!isRunRequested) {
             return
@@ -114,7 +135,7 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
     }
 
     suspend fun handleVpnRevokeAction() {
-        if (host.runtime?.vpn != true) {
+        if (host.runtime?.mode != ServiceMode.VPN) {
             return
         }
         handleStopAction()
@@ -140,7 +161,38 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
 
     // No new request for a settled run: one refused at a prompt would take the service down.
     private fun isStartedAs(options: VpnOptions?): Boolean =
-        runState.value == RunState.STARTED && host.runtime?.vpn == options?.enable
+        runState.value == RunState.STARTED && host.runtime?.cleanupPending == false &&
+            host.runtime?.mode == options?.serviceMode
+
+    /** 异步故障只撤回创建该 Root 会话的意图，不能覆盖后来的启动操作。 */
+    suspend fun handleRootFailure(token: RunRequest, message: String) {
+        if (!arbiter.resetToStopped(token)) return
+        host.log("RootProxy 异步故障=$message")
+        host.showToast(message)
+        reconcileStopped()
+        host.notifyStopped()
+    }
+
+    /** 网络修复与启动、停止共用转换锁，运行中不允许移除正在使用的规则。 */
+    suspend fun repairRoot(): String = transitionLock.withLock {
+        if (isRunRequested) {
+            return@withLock "请先停止代理，再恢复网络"
+        }
+        if (host.runtime != null && !stopLocked()) {
+            return@withLock "Root 代理尚未清理完成，请重试停止后再恢复网络"
+        }
+        try {
+            host.repairRoot()
+            ""
+        } catch (error: CancellationException) {
+            throw error
+        } catch (error: Exception) {
+            val message = error.message ?: "恢复网络失败"
+            host.log("RootProxy 恢复失败=$message")
+            host.reportRootFailure(message)
+            message
+        }
+    }
 
     // The intent is claimed before the Core is set up, so a second action that lands meanwhile
     // toggles this start off instead of racing a second setup against it.
@@ -154,7 +206,9 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
         }
         if (!setupCore()) {
             abandon(request)
-        } else if (launchStart(request).await() == StartOutcome.FAILED) {
+        } else if (launchStart(request).await() == StartOutcome.FAILED &&
+            sharedState.vpnOptions?.rootEnabled != true && host.runtime?.mode != ServiceMode.ROOT
+        ) {
             host.showToast(START_FAILED_MESSAGE)
         }
     }
@@ -189,9 +243,13 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
     private suspend fun setupCore(): Boolean {
         applySharedState()
         host.showToast(sharedState.startTip)
+        // 后台快捷启动可能读取上一次保存的 YAML，Root DNS 覆盖必须同时交给 Go。
+        val setupParams = Gson().toJsonTree(sharedState.setupParams).asJsonObject.apply {
+            addProperty("root-proxy", sharedState.vpnOptions?.rootEnabled == true)
+        }
         return host.quickSetup(
             initParams(host.homeDirPath, host.sdkInt),
-            Gson().toJson(sharedState.setupParams),
+            setupParams.toString(),
         ).fold(
             onSuccess = { message ->
                 if (message.isEmpty()) {
@@ -218,9 +276,18 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
         val started = try {
             startPreparationLock.withLock { runStart(request) }
         } catch (error: CancellationException) {
-            throw error
+            if (isCurrent(request)) throw error
+            false
         } catch (error: Exception) {
             host.log("Unable to process service start request: $error")
+            if (isCurrent(request) &&
+                (sharedState.vpnOptions?.rootEnabled == true ||
+                    host.runtime?.mode == ServiceMode.ROOT || host.hasRootRecovery())
+            ) {
+                val message = error.message ?: START_FAILED_MESSAGE
+                host.reportRootFailure(message)
+                host.showToast(message)
+            }
             false
         }
         return if (started) StartOutcome.STARTED else abandon(request)
@@ -241,7 +308,9 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
             return false
         }
         val options = sharedState.vpnOptions ?: return false
-        if (!prepareVpn(options)) {
+        if (options.serviceMode == ServiceMode.ROOT) {
+            if (!prepareRoot(request)) return false
+        } else if (!prepareVpn(options)) {
             if (host.app() == null && isCurrent(request)) {
                 host.showToast(VPN_PERMISSION_MESSAGE)
             }
@@ -250,7 +319,8 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
         return transitionLock.withLock {
             when {
                 !isCurrent(request) -> false
-                host.runtime?.vpn == options.enable -> true
+                host.runtime?.mode == options.serviceMode &&
+                    host.runtime?.cleanupPending == false -> true
                 else -> transitioning(RunState.STARTING) {
                     host.startService(withLocalNetworkFallback(options)) && isCurrent(request)
                 }
@@ -260,7 +330,7 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
 
     // system/mixed hand TCP to the kernel via the tun subnet, which Android 17 gates as local network.
     private fun withLocalNetworkFallback(options: VpnOptions): VpnOptions {
-        if (!options.enable || options.stack !in KERNEL_TCP_STACKS ||
+        if (options.serviceMode == ServiceMode.PROXY || options.stack !in KERNEL_TCP_STACKS ||
             host.isLocalNetworkPermissionGranted()
         ) {
             return options
@@ -271,7 +341,7 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
 
     // Flutter's startListener and the native quickSetup both open the Core's listeners before any
     // service exists to answer for them, and Flutter may be gone before it hears of the failure.
-    private suspend fun reconcileStopped() = transitionLock.withLock {
+    private suspend fun reconcileStopped(): Unit = transitionLock.withLock {
         when {
             isRunRequested -> publish()
             host.runtime != null -> stopLocked()
@@ -287,21 +357,29 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
             return@withLock false
         }
         abandonVpnPreparation()
-        if (host.runtime != null) {
-            stopLocked()
-        }
-        isCurrent(request)
+        val needsCleanup = host.runtime != null || host.hasRootRecovery()
+        val stopped = !needsCleanup || stopLocked()
+        stopped && isCurrent(request)
     }
 
     private suspend fun stopLocked() = transitioning(RunState.STOPPING) { stopService() }
 
-    private suspend fun stopService() {
-        try {
+    private suspend fun stopService(): Boolean {
+        return try {
             host.stopService()
+            true
         } catch (error: CancellationException) {
             throw error
         } catch (error: Exception) {
             host.log("Unable to stop service: $error")
+            if (host.runtime?.mode == ServiceMode.ROOT || host.hasRootRecovery()) {
+                val message = error.message ?: "Root 代理清理失败，请重试停止或恢复网络"
+                host.reportRootFailure(message)
+                host.showToast(message)
+                false
+            } else {
+                true
+            }
         }
     }
 
@@ -320,6 +398,7 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
     private fun publish() {
         mutableRunState.value = transition ?: when {
             host.runtime == null -> RunState.STOPPED
+            host.runtime?.cleanupPending == true -> RunState.STOPPING
             isRunRequested -> RunState.STARTED
             else -> RunState.STOPPING
         }
@@ -353,8 +432,26 @@ internal class ServiceStateMachine(private val host: ServiceStateHost) {
         abandon()
     }
 
+    /** 授权任务可以被较新的意图取消，成功后仍要检查请求身份。 */
+    private suspend fun prepareRoot(request: RunRequest): Boolean {
+        val preparation = host.scope.async { host.checkRootPermission() }
+        pendingRootPreparation = preparation
+        return try {
+            preparation.await()
+            isCurrent(request)
+        } finally {
+            if (pendingRootPreparation === preparation) {
+                pendingRootPreparation = null
+            }
+        }
+    }
+
+    /** 新意图先取得身份，再中断旧授权，旧任务不能回写当前运行状态。 */
     private fun createRequest(running: Boolean): RunRequest =
-        arbiter.request(running).also { publish() }
+        arbiter.request(running).also {
+            pendingRootPreparation?.cancel()
+            publish()
+        }
 
     private fun isCurrent(request: RunRequest): Boolean = arbiter.isCurrent(request)
 

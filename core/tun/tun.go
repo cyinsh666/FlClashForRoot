@@ -9,6 +9,7 @@ import (
 	"strings"
 	"syscall"
 
+	"github.com/metacubex/mihomo/component/resolver"
 	"github.com/metacubex/mihomo/constant"
 	LC "github.com/metacubex/mihomo/listener/config"
 	"github.com/metacubex/mihomo/listener/sing_tun"
@@ -19,6 +20,7 @@ import (
 type startOptions struct {
 	MTU                  uint32 `json:"mtu"`
 	CongestionController string `json:"congestion-controller"`
+	RootProxy            bool   `json:"root-proxy"`
 }
 
 // Start takes ownership of fd. dupFd is handed to sing_tun.New, which only
@@ -32,6 +34,12 @@ func Start(fd int, stack, address, dns, rawOptions string) *sing_tun.Listener {
 	var settings startOptions
 	if err := json.Unmarshal([]byte(rawOptions), &settings); err != nil {
 		log.Errorln("TUN: %v", err)
+		_ = syscall.Close(fd)
+		return nil
+	}
+	// Root 路由安装前必须已有 DNS 服务；普通 VPN 保留原有行为。
+	if settings.RootProxy && resolver.DefaultService == nil {
+		log.Errorln("RootProxy 状态=启动失败 原因=内核DNS尚未就绪")
 		_ = syscall.Close(fd)
 		return nil
 	}

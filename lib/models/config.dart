@@ -190,11 +190,13 @@ abstract class AppSettingProps with _$AppSettingProps {
     @JsonKey(readValue: _readTabAnimation)
     TabAnimation tabAnimation,
     @Default(true) bool floatingNavigationBar,
+
+    /// 隐藏快捷启动后，由仪表盘长按菜单请求同一套代理启停流程。
+    @Default(false) bool hideQuickStart,
     @Default(true) bool autoCheckUpdate,
     @Default(true)
     @JsonKey(readValue: _readSidebarExpanded)
     bool sidebarExpanded,
-    @Default(0) int acceptedDisclaimerVersion,
     @Default(false) bool crashlyticsTip,
     @Default(false) bool crashlytics,
     @Default(true) bool minimizeOnExit,
@@ -285,6 +287,11 @@ abstract class VpnProps with _$VpnProps {
     @Default(true) bool allowBypass,
     @Default(false) bool dnsHijacking,
     @Default(defaultAccessControlProps) AccessControlProps accessControlProps,
+    // Root 配置保留在设备设置中，实际是否启用由运行平台和安全模式决定。
+    @Default(false) bool rootEnabled,
+    @Default(true) bool rootLocal,
+    @Default(true) bool rootHotspot,
+    @Default('') String rootInterface,
   }) = _VpnProps;
 
   factory VpnProps.fromJson(Map<String, Object?>? json) =>

@@ -85,6 +85,11 @@ extension DashboardWidgetView on DashboardWidget {
       crossAxisCellCount: 4,
       child: ProfilesCard(),
     ),
+    DashboardWidget.rootProxyStatus => const GridItem(
+      key: ValueKey(DashboardWidget.rootProxyStatus),
+      crossAxisCellCount: 4,
+      child: RootProxyStatusCard(),
+    ),
   };
 }
 

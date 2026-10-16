@@ -487,8 +487,12 @@ final class VpnRouteAddressProvider
 
 String _$vpnRouteAddressHash() => r'bae2530b73b71ecff16aadfc395e60996d739d41';
 
+/// 汇总 Android 服务启动参数，Root 与系统 VPN 在有效配置中互斥。
+
 @ProviderFor(vpnOptions)
 final vpnOptionsProvider = VpnOptionsProvider._();
+
+/// 汇总 Android 服务启动参数，Root 与系统 VPN 在有效配置中互斥。
 
 final class VpnOptionsProvider
     extends
@@ -498,6 +502,7 @@ final class VpnOptionsProvider
           FutureOr<VpnOptions>
         >
     with $FutureModifier<VpnOptions>, $FutureProvider<VpnOptions> {
+  /// 汇总 Android 服务启动参数，Root 与系统 VPN 在有效配置中互斥。
   VpnOptionsProvider._()
     : super(
         from: null,
@@ -523,7 +528,7 @@ final class VpnOptionsProvider
   }
 }
 
-String _$vpnOptionsHash() => r'c00e87278b32dd8977ed136aace10dccfe05508d';
+String _$vpnOptionsHash() => r'ab2ebe412decaec1ce0948e40d56d871addac09a';
 
 @ProviderFor(AccessControlState)
 final accessControlStateProvider = AccessControlStateProvider._();

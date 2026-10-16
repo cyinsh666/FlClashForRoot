@@ -452,86 +452,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "disableUDP": MessageLookupByLibrary.simpleMessage("禁用UDP"),
     "disabled": MessageLookupByLibrary.simpleMessage("已关闭"),
     "discardChanges": MessageLookupByLibrary.simpleMessage("是否放弃更改？"),
-    "disclaimer": MessageLookupByLibrary.simpleMessage("免责声明"),
-    "disclaimerAcceptContent": MessageLookupByLibrary.simpleMessage(
-      "一旦你安装、复制或使用本软件，即视为你已阅读并同意本声明的全部内容。如你不同意本声明的任何条款，请立即停止使用并卸载本软件。",
-    ),
-    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage("接受声明"),
-    "disclaimerAnalyticsContent": MessageLookupByLibrary.simpleMessage(
-      "随 Firebase 自动收集基础的应用使用统计。\n\n收集内容：首次启动、应用打开与会话时长、应用更新等基础事件，应用实例标识，设备型号、系统版本、系统语言，以及由 IP 地址推断的国家或地区级大致位置。\n\n用途：仅用于了解活跃设备数、版本分布与系统兼容情况。开发者不会将这些数据用于广告，不会出售，也不会与你的订阅或配置相关联。",
-    ),
-    "disclaimerAnalyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Analytics（使用统计）",
-    ),
-    "disclaimerAndroidOnly": MessageLookupByLibrary.simpleMessage("仅 Android"),
-    "disclaimerChangesContent": MessageLookupByLibrary.simpleMessage(
-      "开发者有权随版本更新修改本声明，修改后的内容随新版本发布即生效。你在更新后继续使用本软件，即视为接受修改后的声明。",
-    ),
-    "disclaimerChangesTitle": MessageLookupByLibrary.simpleMessage("声明变更"),
-    "disclaimerCrashlyticsContent": MessageLookupByLibrary.simpleMessage(
-      "应用发生崩溃时，自动上传崩溃报告。\n\n收集内容：崩溃堆栈与错误信息、崩溃发生时间、应用版本与构建号、设备品牌与型号、Android 系统版本、屏幕方向、剩余内存与存储空间、设备是否已 root，以及一个随安装生成、重装后即重置的随机安装标识。\n\n用途：仅用于定位和修复崩溃问题。\n\n你可以在“工具 > 常规 > 崩溃分析”中随时关闭。",
-    ),
-    "disclaimerCrashlyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Crashlytics（崩溃分析）",
-    ),
-    "disclaimerDataProcessingContent": MessageLookupByLibrary.simpleMessage(
-      "上述数据由 Google 代为处理和存储，可能被传输至你所在国家或地区以外（如美国）的服务器，并受 Google 隐私政策与 Firebase 隐私和安全说明约束。崩溃报告最多保留 90 天，统计数据按 Firebase 的默认策略保留。",
-    ),
-    "disclaimerDesc": MessageLookupByLibrary.simpleMessage(
-      "在使用 FlClash（以下简称“本软件”）前，请仔细阅读并充分理解本声明的全部内容。点击“同意”即表示你已阅读、理解并接受以下全部条款；如不同意，请点击“退出”并停止使用本软件。",
-    ),
-    "disclaimerFirebasePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Firebase 隐私和安全说明",
-    ),
-    "disclaimerGooglePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Google 隐私政策",
-    ),
-    "disclaimerLiabilityContent": MessageLookupByLibrary.simpleMessage(
-      "在适用法律允许的最大范围内，开发者及所有贡献者均不对因使用或无法使用本软件而产生的任何直接、间接、偶然、特殊、惩罚性或后果性损害承担责任，包括但不限于数据丢失、设备损坏、网络异常、业务中断、利润损失或因此引起的任何法律纠纷，即使已被告知发生此类损害的可能性。",
-    ),
-    "disclaimerLiabilityTitle": MessageLookupByLibrary.simpleMessage("责任限制"),
-    "disclaimerLicenseContent": MessageLookupByLibrary.simpleMessage(
-      "本软件以 GPL-3.0 协议开源。你可以在遵守该协议的前提下自由使用、修改和分发本软件，但须同样以 GPL-3.0 协议开源并保留原作者的版权声明。\n\n本软件包含的第三方组件（包括 Clash.Meta 内核）分别遵循其各自的开源协议。基于本软件修改或分发的版本所产生的任何问题，与原作者无关。",
-    ),
-    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage("开源协议"),
-    "disclaimerNoServiceStatement": MessageLookupByLibrary.simpleMessage(
-      "本软件自身不提供任何代理服务器、节点、订阅、机场或网络接入服务，也不与任何此类服务的提供者存在合作、代理或担保关系。",
-    ),
-    "disclaimerPrivacyContent": MessageLookupByLibrary.simpleMessage(
-      "本软件不会收集或上传你的订阅地址、节点信息、配置内容、访问的网站、连接记录、流量内容和日志，这些数据仅保存在你的设备本地，开发者无法获取。\n\n本软件只会在你使用相应功能时访问外部网络，例如更新订阅时访问你提供的订阅地址、检查更新时访问 GitHub。\n\n桌面版（Windows、macOS、Linux）未集成任何数据统计或崩溃上报服务。Android 版集成了 Google Firebase 的以下两项服务，用于改进应用稳定性：",
-    ),
-    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage("数据收集与隐私"),
-    "disclaimerReadToEnd": MessageLookupByLibrary.simpleMessage("请阅读至底部"),
-    "disclaimerResponsibilityContent": MessageLookupByLibrary.simpleMessage(
-      "你应自行确认使用本软件在你所在国家或地区是合法的，并对使用本软件的全部行为及其后果独立承担法律责任。\n\n你导入的订阅、节点与配置由你自行选择和判断，其来源是否合法、内容是否安全、服务是否稳定，均由你与相关提供者自行负责。",
-    ),
-    "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage(
-      "用户责任",
-    ),
-    "disclaimerRestateHint": MessageLookupByLibrary.simpleMessage("在此输入上述声明"),
-    "disclaimerRestateMismatch": MessageLookupByLibrary.simpleMessage(
-      "与声明内容不一致",
-    ),
-    "disclaimerRestateTip": MessageLookupByLibrary.simpleMessage(
-      "为确认你已知悉，请在下方输入框中完整复述以下声明：",
-    ),
-    "disclaimerRestateTitle": MessageLookupByLibrary.simpleMessage("复述声明"),
-    "disclaimerSoftwareContent": MessageLookupByLibrary.simpleMessage(
-      "本软件是基于 Clash.Meta（mihomo）内核的开源网络代理客户端，仅提供配置管理、规则分流与流量转发等本地工具功能。",
-    ),
-    "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage("软件性质"),
-    "disclaimerThirdPartyContent": MessageLookupByLibrary.simpleMessage(
-      "订阅链接、配置文件、规则集、脚本、外部资源及外部链接均由第三方提供，开发者无法也不会对其合法性、准确性、安全性和可用性进行审查或担保。\n\n因使用第三方内容导致的数据泄露、财产损失、账号封禁或其他任何损失，由你与第三方自行解决，开发者不承担任何责任。",
-    ),
-    "disclaimerThirdPartyTitle": MessageLookupByLibrary.simpleMessage("第三方内容"),
-    "disclaimerUsageContent": MessageLookupByLibrary.simpleMessage(
-      "本软件仅供学习交流、技术研究等非商业用途。严禁将本软件用于任何商业目的，包括但不限于付费分发、捆绑销售、作为商业服务的组成部分或以本软件名义开展经营活动；任何商业行为均与本软件及其开发者无关。\n\n严禁将本软件用于违反你所在国家或地区法律法规的活动，包括但不限于绕过依法设置的网络访问限制、传播违法信息、实施网络攻击或侵犯他人合法权益。",
-    ),
-    "disclaimerUsageTitle": MessageLookupByLibrary.simpleMessage("使用限制"),
-    "disclaimerWarrantyContent": MessageLookupByLibrary.simpleMessage(
-      "本软件按“现状”和“可用”的原则提供，不附带任何明示或默示的担保，包括但不限于适销性、特定用途适用性、不侵权以及持续可用、无错误、无安全漏洞的担保。\n\n开发者不保证本软件能满足你的需求，也不保证本软件的运行不会中断或不会出现错误。",
-    ),
-    "disclaimerWarrantyTitle": MessageLookupByLibrary.simpleMessage("无担保声明"),
     "disconnected": MessageLookupByLibrary.simpleMessage("已断开"),
     "discoverNewVersion": MessageLookupByLibrary.simpleMessage("发现新版本"),
     "dnsHijacking": MessageLookupByLibrary.simpleMessage("DNS劫持"),
@@ -643,6 +563,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "hideFromList": MessageLookupByLibrary.simpleMessage("从列表中隐藏"),
     "hideIp": MessageLookupByLibrary.simpleMessage("隐藏 IP"),
     "hidePassword": MessageLookupByLibrary.simpleMessage("隐藏密码"),
+    "hideQuickStart": MessageLookupByLibrary.simpleMessage("隐藏快捷启动"),
+    "hideQuickStartDesc": MessageLookupByLibrary.simpleMessage("使用仪表盘长按代替"),
     "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage("隐藏超时代理"),
     "hideTimeoutProxiesDesc": MessageLookupByLibrary.simpleMessage(
       "不显示上次延迟测试超时的代理",
@@ -948,6 +870,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("密码"),
     "paste": MessageLookupByLibrary.simpleMessage("粘贴"),
     "peers": MessageLookupByLibrary.simpleMessage("初始节点"),
+    "personalization": MessageLookupByLibrary.simpleMessage("个性化"),
     "pickFromAlbum": MessageLookupByLibrary.simpleMessage("从相册选择"),
     "pinWindow": MessageLookupByLibrary.simpleMessage("窗口置顶"),
     "pleaseBindWebDAV": MessageLookupByLibrary.simpleMessage("请绑定WebDAV"),
@@ -1068,6 +991,72 @@ class MessageLookup extends MessageLookupByLibrary {
     "restoreStrategyOverride": MessageLookupByLibrary.simpleMessage("覆盖"),
     "restoreSuccess": MessageLookupByLibrary.simpleMessage("恢复成功"),
     "retry": MessageLookupByLibrary.simpleMessage("重试"),
+    "rootActive": MessageLookupByLibrary.simpleMessage("已接管"),
+    "rootAddressPolicy": MessageLookupByLibrary.simpleMessage("地址族策略"),
+    "rootAddressPolicyDescription": MessageLookupByLibrary.simpleMessage(
+      "当前 Root 模式代理所选范围的 IPv4 TCP/UDP 及 DNS，并阻断这些范围的 IPv6；IPv6 不会被当作已代理流量。未选择的范围保持原有网络行为。",
+    ),
+    "rootCapabilities": MessageLookupByLibrary.simpleMessage("Root 能力检查结果"),
+    "rootCheck": MessageLookupByLibrary.simpleMessage("检查 Root 授权与能力"),
+    "rootConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
+      "Root 代理相关配置已变更，重启代理后生效",
+    ),
+    "rootConfigDescription": MessageLookupByLibrary.simpleMessage(
+      "保存后在主页启动代理；正在运行时按提示重启。Root 模式与 VPN 模式互斥，保留原有 VPN 设置供切回使用。",
+    ),
+    "rootDashboardStatus": MessageLookupByLibrary.simpleMessage("透明代理"),
+    "rootDownstream": MessageLookupByLibrary.simpleMessage("热点接口及网段"),
+    "rootHotspotInterface": MessageLookupByLibrary.simpleMessage("热点接口"),
+    "rootHotspotInterfaceDescription": MessageLookupByLibrary.simpleMessage(
+      "留空自动识别，必要时填写 ap0 等接口名",
+    ),
+    "rootHotspotSettings": MessageLookupByLibrary.simpleMessage("打开系统热点设置"),
+    "rootHotspotSettingsUnavailable": MessageLookupByLibrary.simpleMessage(
+      "无法打开系统热点设置，请在系统设置中手动打开",
+    ),
+    "rootInactive": MessageLookupByLibrary.simpleMessage("未接管"),
+    "rootInterfaceInvalid": MessageLookupByLibrary.simpleMessage(
+      "请输入有效的接口名，最多 15 个字母、数字或 _ . : -",
+    ),
+    "rootMaintenance": MessageLookupByLibrary.simpleMessage("检查与恢复"),
+    "rootNeedsRepair": MessageLookupByLibrary.simpleMessage("检测到需要清理的 Root 会话"),
+    "rootNotDetected": MessageLookupByLibrary.simpleMessage("未检测到"),
+    "rootPhaseActive": MessageLookupByLibrary.simpleMessage("运行中"),
+    "rootPhaseCleanupFailed": MessageLookupByLibrary.simpleMessage("网络恢复未完成"),
+    "rootPhaseFailed": MessageLookupByLibrary.simpleMessage("Root 接管失败"),
+    "rootPhaseStarting": MessageLookupByLibrary.simpleMessage("正在准备 Root 接管"),
+    "rootPhaseStopped": MessageLookupByLibrary.simpleMessage("已停止"),
+    "rootPhaseWaitingHotspot": MessageLookupByLibrary.simpleMessage("等待系统热点开启"),
+    "rootPhaseWaitingHotspotRestart": MessageLookupByLibrary.simpleMessage(
+      "热点尚未接管",
+    ),
+    "rootProxy": MessageLookupByLibrary.simpleMessage("Root 透明代理"),
+    "rootProxyDescription": MessageLookupByLibrary.simpleMessage("代理本机及热点设备流量"),
+    "rootProxyEnable": MessageLookupByLibrary.simpleMessage("启用 Root 透明代理"),
+    "rootProxyHotspot": MessageLookupByLibrary.simpleMessage("热点流量"),
+    "rootProxyLocal": MessageLookupByLibrary.simpleMessage("本机流量"),
+    "rootProxyLocalDescription": MessageLookupByLibrary.simpleMessage(
+      "沿用应用访问控制，仅作用于本机应用",
+    ),
+    "rootRefreshStatus": MessageLookupByLibrary.simpleMessage("刷新 Root 状态"),
+    "rootRepair": MessageLookupByLibrary.simpleMessage("停止代理并恢复网络"),
+    "rootRepairCompleted": MessageLookupByLibrary.simpleMessage("网络恢复完成"),
+    "rootRepairDescription": MessageLookupByLibrary.simpleMessage(
+      "恢复网络会先停止当前代理，再清理 FlClash 创建的 Root 规则和路由。",
+    ),
+    "rootSelectScopeTip": MessageLookupByLibrary.simpleMessage(
+      "至少选择本机流量或热点流量中的一项",
+    ),
+    "rootSessionStatus": MessageLookupByLibrary.simpleMessage("Root 会话"),
+    "rootSettingsSaveFailed": MessageLookupByLibrary.simpleMessage(
+      "Root 代理设置保存失败",
+    ),
+    "rootStatusReadFailed": MessageLookupByLibrary.simpleMessage(
+      "读取 Root 状态失败",
+    ),
+    "rootStatusUnknown": MessageLookupByLibrary.simpleMessage("状态未知"),
+    "rootStopFailed": MessageLookupByLibrary.simpleMessage("代理尚未完全停止，请稍后再恢复网络"),
+    "rootUpstream": MessageLookupByLibrary.simpleMessage("上游网络"),
     "routeAddress": MessageLookupByLibrary.simpleMessage("路由地址"),
     "routeExcludeAddress": MessageLookupByLibrary.simpleMessage("排除路由地址"),
     "routingMark": MessageLookupByLibrary.simpleMessage("路由标记"),

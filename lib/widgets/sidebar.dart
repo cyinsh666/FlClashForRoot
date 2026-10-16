@@ -6,6 +6,9 @@ import 'package:fl_clash/icons/icons.dart';
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'context_menu.dart';
+import 'popup.dart';
+
 const _compactWidth = 48.0;
 const _expandedWidth = 220.0;
 const _itemSize = 40.0;
@@ -22,10 +25,15 @@ const _indicatorDuration = Duration(milliseconds: 320);
 final _itemShape = AppShape.all(10);
 
 class SidebarDestination {
-  const SidebarDestination({required this.glyph, required this.label});
+  const SidebarDestination({
+    required this.glyph,
+    required this.label,
+    this.menuItems,
+  });
 
   final Glyph glyph;
   final String label;
+  final List<CommonPopupMenuItem>? menuItems;
 }
 
 /// Where the sidebar cannot widen in place, [onToggle] is null and the toggle
@@ -324,6 +332,7 @@ class _SidebarPane extends StatelessWidget {
                             sideInset: sideInset,
                             selected: index == selectedIndex,
                             tooltip: rowTooltip(destination.label),
+                            menuItems: destination.menuItems,
                             onTap: () => onSelected(index),
                             child: _DestinationRow(
                               destination: destination,
@@ -366,6 +375,7 @@ class _SidebarButton extends StatelessWidget {
     required this.child,
     this.selected,
     this.tooltipIsLabel = false,
+    this.menuItems,
   });
 
   final _SidebarColors colors;
@@ -376,33 +386,40 @@ class _SidebarButton extends StatelessWidget {
   final bool tooltipIsLabel;
   final VoidCallback onTap;
   final Widget child;
+  final List<CommonPopupMenuItem>? menuItems;
 
+  /// 菜单接管长按，Tooltip 保留鼠标悬停，普通点击仍交给原 InkWell。
   @override
   Widget build(BuildContext context) {
+    final hasMenu = menuItems?.isNotEmpty == true;
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: sideInset,
         vertical: _itemGap / 2,
       ),
-      child: Semantics(
-        container: true,
-        button: true,
-        selected: selected,
-        child: Material(
-          color: selected == true ? colors.selectedFill : Colors.transparent,
-          shape: _itemShape,
-          child: InkWell(
-            onTap: onTap,
-            customBorder: _itemShape,
-            mouseCursor: SystemMouseCursors.basic,
-            splashFactory: NoSplash.splashFactory,
-            overlayColor: colors.overlay,
-            child: Tooltip(
-              message: tooltip,
-              excludeFromSemantics: !tooltipIsLabel,
-              child: IconTheme.merge(
-                data: IconThemeData(size: _iconSize, color: colors.icon),
-                child: SizedBox(height: height, child: child),
+      child: ContextMenuRegion(
+        menuItems: menuItems,
+        child: Semantics(
+          container: true,
+          button: true,
+          selected: selected,
+          child: Material(
+            color: selected == true ? colors.selectedFill : Colors.transparent,
+            shape: _itemShape,
+            child: InkWell(
+              onTap: onTap,
+              customBorder: _itemShape,
+              mouseCursor: SystemMouseCursors.basic,
+              splashFactory: NoSplash.splashFactory,
+              overlayColor: colors.overlay,
+              child: Tooltip(
+                message: tooltip,
+                triggerMode: hasMenu ? TooltipTriggerMode.manual : null,
+                excludeFromSemantics: !tooltipIsLabel,
+                child: IconTheme.merge(
+                  data: IconThemeData(size: _iconSize, color: colors.icon),
+                  child: SizedBox(height: height, child: child),
+                ),
               ),
             ),
           ),

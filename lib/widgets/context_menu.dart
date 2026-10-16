@@ -19,9 +19,17 @@ const _touchDevices = {
 /// otherwise leave covered.
 class ContextMenuRegion extends StatefulWidget {
   final List<CommonPopupMenuItem>? menuItems;
+
+  /// 让使用原始指针的导航控件在弹菜单前结束按压，避免松手后误触切页。
+  final VoidCallback? onOpen;
   final Widget child;
 
-  const ContextMenuRegion({super.key, this.menuItems, required this.child});
+  const ContextMenuRegion({
+    super.key,
+    this.menuItems,
+    this.onOpen,
+    required this.child,
+  });
 
   @override
   State<ContextMenuRegion> createState() => _ContextMenuRegionState();
@@ -38,6 +46,8 @@ class _ContextMenuRegionState extends State<ContextMenuRegion> {
   }
 
   void _open(Offset globalPosition, {bool avoid = false}) {
+    final items = widget.menuItems;
+    if (items == null || items.isEmpty) return;
     final navigator = Navigator.maybeOf(context);
     final navigatorBox = navigator?.context.findRenderObject();
     final box = context.findRenderObject();
@@ -52,6 +62,7 @@ class _ContextMenuRegionState extends State<ContextMenuRegion> {
       box.getTransformTo(navigatorBox),
       Offset.zero & box.size,
     );
+    widget.onOpen?.call();
     unawaited(
       navigator.push(
         CommonPopupRoute<void>(
@@ -61,7 +72,7 @@ class _ContextMenuRegionState extends State<ContextMenuRegion> {
           placement: PopupPlacement.belowPoint,
           anchorOf: () => point & Size.zero,
           avoid: avoid ? rowRect : null,
-          builder: (_) => CommonPopupMenu(items: widget.menuItems!),
+          builder: (_) => CommonPopupMenu(items: items),
         ),
       ),
     );

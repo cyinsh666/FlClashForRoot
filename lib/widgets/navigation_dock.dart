@@ -11,6 +11,9 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'context_menu.dart';
+import 'popup.dart';
+
 const double _barHeight = 62;
 const double _barPadding = 4;
 const double _edgeMargin = 21;
@@ -201,10 +204,17 @@ List<BoxShadow> _dockShadows(ColorScheme colorScheme) {
 }
 
 class NavigationDockDestination {
-  const NavigationDockDestination({required this.glyph, required this.label});
+  const NavigationDockDestination({
+    required this.glyph,
+    required this.label,
+    this.menuItems,
+  });
 
   final Glyph glyph;
   final String label;
+
+  /// 菜单随导航项传入，浮动导航不需要了解具体业务动作。
+  final List<CommonPopupMenuItem>? menuItems;
 }
 
 /// Marks a phone's home page, whose foot the navigation dock holds.
@@ -811,6 +821,15 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar>
     _settleSwell();
   }
 
+  /// 长按或右键打开菜单后，只收回按压动画，不提交导航选择。
+  void _cancelPressForMenu() {
+    _pointer = null;
+    _tracker = null;
+    _release(commit: false);
+    _stretch.springTo(0, _settleSpring);
+    _settleSwell();
+  }
+
   void _handleExit(PointerExitEvent event) {
     _cursor = null;
     _hoverShow.springTo(0, _fadeSpring);
@@ -1021,20 +1040,24 @@ class _FloatingNavigationBarState extends State<FloatingNavigationBar>
                             for (final (index, destination)
                                 in widget.destinations.indexed)
                               Expanded(
-                                child: _FloatingBarItem(
-                                  destination: destination,
-                                  selected: index == _selectedIndex,
-                                  index: index,
-                                  lens: _lens,
-                                  hoverAt: _hoverAt,
-                                  lift: _lift,
-                                  labelStyle: labelStyle?.copyWith(
-                                    fontSize: _labelSize * labelScale,
+                                child: ContextMenuRegion(
+                                  menuItems: destination.menuItems,
+                                  onOpen: _cancelPressForMenu,
+                                  child: _FloatingBarItem(
+                                    destination: destination,
+                                    selected: index == _selectedIndex,
+                                    index: index,
+                                    lens: _lens,
+                                    hoverAt: _hoverAt,
+                                    lift: _lift,
+                                    labelStyle: labelStyle?.copyWith(
+                                      fontSize: _labelSize * labelScale,
+                                    ),
+                                    labelHeight: lineHeight,
+                                    labelOverflows:
+                                        labels[index].width * labelScale > room,
+                                    onActivate: () => widget.onSelected(index),
                                   ),
-                                  labelHeight: lineHeight,
-                                  labelOverflows:
-                                      labels[index].width * labelScale > room,
-                                  onActivate: () => widget.onSelected(index),
                                 ),
                               ),
                           ],
@@ -1282,7 +1305,13 @@ class _FloatingBarItemState extends State<_FloatingBarItem>
             ),
           ),
           child: widget.labelOverflows
-              ? Tooltip(message: widget.destination.label, child: content)
+              ? Tooltip(
+                  message: widget.destination.label,
+                  triggerMode: widget.destination.menuItems?.isNotEmpty == true
+                      ? TooltipTriggerMode.manual
+                      : TooltipTriggerMode.longPress,
+                  child: content,
+                )
               : content,
         ),
       ),

@@ -493,94 +493,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "disableUDP": MessageLookupByLibrary.simpleMessage("UDPを無効化"),
     "disabled": MessageLookupByLibrary.simpleMessage("無効"),
     "discardChanges": MessageLookupByLibrary.simpleMessage("変更を破棄しますか？"),
-    "disclaimer": MessageLookupByLibrary.simpleMessage("免責事項"),
-    "disclaimerAcceptContent": MessageLookupByLibrary.simpleMessage(
-      "本ソフトウェアをインストール、複製または使用した時点で、本声明のすべての内容を読み、同意したものとみなされます。いずれかの条項に同意いただけない場合は、直ちに使用を中止し、本ソフトウェアをアンインストールしてください。",
-    ),
-    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage("声明への同意"),
-    "disclaimerAnalyticsContent": MessageLookupByLibrary.simpleMessage(
-      "Firebase により基本的なアプリ利用統計が自動的に収集されます。\n\n収集内容：初回起動、アプリの起動とセッション時間、アプリの更新などの基本イベント、アプリインスタンス ID、端末のモデル、OS のバージョン、システム言語、および IP アドレスから推定される国または地域レベルのおおよその位置情報。\n\n目的：アクティブな端末数、バージョン分布、OS の互換性を把握するためにのみ使用します。開発者はこれらのデータを広告に使用したり、販売したり、サブスクリプションや設定と関連付けたりすることはありません。",
-    ),
-    "disclaimerAnalyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Analytics（利用統計）",
-    ),
-    "disclaimerAndroidOnly": MessageLookupByLibrary.simpleMessage("Android のみ"),
-    "disclaimerChangesContent": MessageLookupByLibrary.simpleMessage(
-      "開発者はバージョンの更新に伴い本声明を変更することがあり、変更内容は新しいバージョンの公開とともに効力を生じます。更新後も本ソフトウェアを引き続き使用した場合、変更後の声明に同意したものとみなされます。",
-    ),
-    "disclaimerChangesTitle": MessageLookupByLibrary.simpleMessage("本声明の変更"),
-    "disclaimerCrashlyticsContent": MessageLookupByLibrary.simpleMessage(
-      "アプリがクラッシュした際に、クラッシュレポートを自動的に送信します。\n\n収集内容：クラッシュのスタックトレースとエラー情報、発生日時、アプリのバージョンとビルド番号、端末のメーカーとモデル、Android のバージョン、画面の向き、空きメモリと空きストレージ、root 化の有無、およびインストール時に生成され再インストールでリセットされるランダムなインストール ID。\n\n目的：クラッシュの特定と修正のためにのみ使用します。\n\n「ツール > 一般 > クラッシュ分析」からいつでもオフにできます。",
-    ),
-    "disclaimerCrashlyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Crashlytics（クラッシュ分析）",
-    ),
-    "disclaimerDataProcessingContent": MessageLookupByLibrary.simpleMessage(
-      "これらのデータは Google が代わりに処理・保存し、お住まいの国または地域外（米国など）のサーバーに転送される場合があり、Google のプライバシーポリシーおよび Firebase のプライバシーとセキュリティに関する説明に従って取り扱われます。クラッシュレポートは最大 90 日間保存され、統計データは Firebase の既定の保存ポリシーに従って保存されます。",
-    ),
-    "disclaimerDesc": MessageLookupByLibrary.simpleMessage(
-      "FlClash（以下「本ソフトウェア」）をご利用になる前に、本声明の内容をよくお読みになり、十分にご理解ください。「同意する」をタップすると、以下のすべての条項を読み、理解し、承諾したものとみなされます。同意いただけない場合は「終了」をタップし、本ソフトウェアの使用を中止してください。",
-    ),
-    "disclaimerFirebasePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Firebase のプライバシーとセキュリティ",
-    ),
-    "disclaimerGooglePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Google プライバシーポリシー",
-    ),
-    "disclaimerLiabilityContent": MessageLookupByLibrary.simpleMessage(
-      "適用法で認められる最大限の範囲において、開発者およびすべての貢献者は、本ソフトウェアの使用または使用不能に起因する直接的、間接的、偶発的、特別、懲罰的または結果的な損害（データの消失、機器の損傷、ネットワーク障害、業務の中断、逸失利益、およびそれに起因する法的紛争を含むがこれらに限らない）について、その可能性を知らされていた場合であっても、一切責任を負いません。",
-    ),
-    "disclaimerLiabilityTitle": MessageLookupByLibrary.simpleMessage("責任の制限"),
-    "disclaimerLicenseContent": MessageLookupByLibrary.simpleMessage(
-      "本ソフトウェアは GPL-3.0 ライセンスのもとでオープンソースとして公開されています。同ライセンスを遵守する限り、自由に使用、改変、再配布できますが、派生物も GPL-3.0 で公開し、原著作者の著作権表示を保持する必要があります。\n\n本ソフトウェアに含まれるサードパーティのコンポーネント（Clash.Meta コアを含む）は、それぞれのライセンスに従います。改変版や再配布版に起因する問題について、原著作者は責任を負いません。",
-    ),
-    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage(
-      "オープンソースライセンス",
-    ),
-    "disclaimerNoServiceStatement": MessageLookupByLibrary.simpleMessage(
-      "本ソフトウェア自体は、プロキシサーバー、ノード、サブスクリプション、ネットワーク接続サービスを一切提供しておらず、それらのサービス提供者と提携、代理、保証の関係はありません。",
-    ),
-    "disclaimerPrivacyContent": MessageLookupByLibrary.simpleMessage(
-      "本ソフトウェアは、サブスクリプション URL、ノード情報、設定内容、閲覧したウェブサイト、接続記録、通信内容、ログを収集またはアップロードしません。これらのデータは端末内にのみ保存され、開発者がアクセスすることはできません。\n\n本ソフトウェアが外部ネットワークにアクセスするのは、プロファイル更新時に指定されたサブスクリプション URL へアクセスする場合や、アップデート確認時に GitHub へアクセスする場合など、該当する機能を使用したときのみです。\n\nデスクトップ版（Windows、macOS、Linux）には、統計やクラッシュレポートのサービスは一切組み込まれていません。Android 版には、安定性向上のため以下の 2 つの Google Firebase サービスが組み込まれています。",
-    ),
-    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage(
-      "データ収集とプライバシー",
-    ),
-    "disclaimerReadToEnd": MessageLookupByLibrary.simpleMessage("最後までお読みください"),
-    "disclaimerResponsibilityContent": MessageLookupByLibrary.simpleMessage(
-      "お住まいの国または地域で本ソフトウェアの使用が合法であることはご自身で確認する必要があり、本ソフトウェアを使用したすべての行為とその結果について、ご自身が単独で法的責任を負います。\n\nインポートするサブスクリプション、ノード、設定はご自身の判断で選択したものです。その出所の適法性、内容の安全性、サービスの安定性については、利用者と各提供者の間で解決してください。",
-    ),
-    "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage(
-      "利用者の責任",
-    ),
-    "disclaimerRestateHint": MessageLookupByLibrary.simpleMessage("上記の声明を入力"),
-    "disclaimerRestateMismatch": MessageLookupByLibrary.simpleMessage(
-      "声明の内容と一致しません",
-    ),
-    "disclaimerRestateTip": MessageLookupByLibrary.simpleMessage(
-      "内容を理解したことを確認するため、以下の声明を下の入力欄に正確に入力してください：",
-    ),
-    "disclaimerRestateTitle": MessageLookupByLibrary.simpleMessage("声明の復唱"),
-    "disclaimerSoftwareContent": MessageLookupByLibrary.simpleMessage(
-      "本ソフトウェアは Clash.Meta（mihomo）コアをベースとしたオープンソースのネットワークプロキシクライアントであり、設定管理、ルールによる振り分け、トラフィック転送などのローカルツール機能のみを提供します。",
-    ),
-    "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage(
-      "ソフトウェアの性質",
-    ),
-    "disclaimerThirdPartyContent": MessageLookupByLibrary.simpleMessage(
-      "サブスクリプションリンク、設定ファイル、ルールセット、スクリプト、外部リソース、外部リンクはすべて第三者が提供するものであり、開発者はその適法性、正確性、安全性、可用性を審査または保証することはできず、また行いません。\n\nサードパーティのコンテンツの使用に起因する情報漏えい、財産上の損失、アカウント停止その他の損失は、利用者と第三者の間で解決するものとし、開発者は一切責任を負いません。",
-    ),
-    "disclaimerThirdPartyTitle": MessageLookupByLibrary.simpleMessage(
-      "サードパーティのコンテンツ",
-    ),
-    "disclaimerUsageContent": MessageLookupByLibrary.simpleMessage(
-      "本ソフトウェアは学習、交流、技術研究などの非商用目的でのみ使用できます。有償配布、抱き合わせ販売、商用サービスの一部としての利用、本ソフトウェアの名義での事業活動など、あらゆる商用目的での使用を固く禁じます。いかなる商業行為も本ソフトウェアおよび開発者とは一切関係ありません。\n\nお住まいの国または地域の法令に違反する目的での使用を固く禁じます。これには、法に基づくネットワークアクセス制限の回避、違法情報の拡散、サイバー攻撃、他者の権利の侵害などが含まれますが、これらに限りません。",
-    ),
-    "disclaimerUsageTitle": MessageLookupByLibrary.simpleMessage("使用の制限"),
-    "disclaimerWarrantyContent": MessageLookupByLibrary.simpleMessage(
-      "本ソフトウェアは「現状のまま」かつ「提供可能な範囲で」提供され、商品性、特定目的への適合性、非侵害、継続的な可用性、エラーやセキュリティ上の脆弱性がないことの保証を含め、明示または黙示を問わずいかなる保証も伴いません。\n\n開発者は、本ソフトウェアが利用者の要件を満たすこと、また中断やエラーなく動作することを保証しません。",
-    ),
-    "disclaimerWarrantyTitle": MessageLookupByLibrary.simpleMessage("無保証"),
     "disconnected": MessageLookupByLibrary.simpleMessage("切断済み"),
     "discoverNewVersion": MessageLookupByLibrary.simpleMessage(
       "新しいバージョンが見つかりました",
@@ -702,6 +614,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "hideFromList": MessageLookupByLibrary.simpleMessage("リストから隠す"),
     "hideIp": MessageLookupByLibrary.simpleMessage("IP を隠す"),
     "hidePassword": MessageLookupByLibrary.simpleMessage("パスワードを隠す"),
+    "hideQuickStart": MessageLookupByLibrary.simpleMessage("クイック起動を非表示"),
+    "hideQuickStartDesc": MessageLookupByLibrary.simpleMessage(
+      "代わりにダッシュボードを長押し",
+    ),
     "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage(
       "タイムアウトしたプロキシを隠す",
     ),
@@ -1045,6 +961,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("パスワード"),
     "paste": MessageLookupByLibrary.simpleMessage("貼り付け"),
     "peers": MessageLookupByLibrary.simpleMessage("ピア"),
+    "personalization": MessageLookupByLibrary.simpleMessage("パーソナライズ"),
     "pickFromAlbum": MessageLookupByLibrary.simpleMessage("アルバムから選択"),
     "pinWindow": MessageLookupByLibrary.simpleMessage("最前面に固定"),
     "pleaseBindWebDAV": MessageLookupByLibrary.simpleMessage("WebDAVを連携してください"),
@@ -1177,6 +1094,96 @@ class MessageLookup extends MessageLookupByLibrary {
     "restoreStrategyOverride": MessageLookupByLibrary.simpleMessage("上書き"),
     "restoreSuccess": MessageLookupByLibrary.simpleMessage("復元が完了しました"),
     "retry": MessageLookupByLibrary.simpleMessage("再試行"),
+    "rootActive": MessageLookupByLibrary.simpleMessage("通信を取得中"),
+    "rootAddressPolicy": MessageLookupByLibrary.simpleMessage("IP アドレスの方針"),
+    "rootAddressPolicyDescription": MessageLookupByLibrary.simpleMessage(
+      "Root モードは選択した範囲の IPv4 TCP/UDP と DNS を代理し、その範囲の IPv6 を遮断します。IPv6 は代理されません。未選択の範囲の動作は変わりません。",
+    ),
+    "rootCapabilities": MessageLookupByLibrary.simpleMessage("Root 機能の確認結果"),
+    "rootCheck": MessageLookupByLibrary.simpleMessage("Root 権限と機能を確認"),
+    "rootConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
+      "Root プロキシ設定が変更されました。再起動して適用してください",
+    ),
+    "rootConfigDescription": MessageLookupByLibrary.simpleMessage(
+      "保存後にホームから開始してください。実行中は通知から再起動できます。Root と VPN は同時に使用できません。VPN 設定は保持されます。",
+    ),
+    "rootDashboardStatus": MessageLookupByLibrary.simpleMessage("透過プロキシ"),
+    "rootDownstream": MessageLookupByLibrary.simpleMessage(
+      "テザリングのインターフェースとサブネット",
+    ),
+    "rootHotspotInterface": MessageLookupByLibrary.simpleMessage(
+      "テザリングのインターフェース",
+    ),
+    "rootHotspotInterfaceDescription": MessageLookupByLibrary.simpleMessage(
+      "空欄で自動検出します。必要なら ap0 などを指定してください",
+    ),
+    "rootHotspotSettings": MessageLookupByLibrary.simpleMessage(
+      "システムのテザリング設定を開く",
+    ),
+    "rootHotspotSettingsUnavailable": MessageLookupByLibrary.simpleMessage(
+      "テザリング設定を開けません。システム設定から開いてください",
+    ),
+    "rootInactive": MessageLookupByLibrary.simpleMessage("通信を取得していません"),
+    "rootInterfaceInvalid": MessageLookupByLibrary.simpleMessage(
+      "インターフェース名は英数字と _ . : - で15文字以内にしてください",
+    ),
+    "rootMaintenance": MessageLookupByLibrary.simpleMessage("確認と復旧"),
+    "rootNeedsRepair": MessageLookupByLibrary.simpleMessage(
+      "後処理が必要な Root セッションがあります",
+    ),
+    "rootNotDetected": MessageLookupByLibrary.simpleMessage("未検出"),
+    "rootPhaseActive": MessageLookupByLibrary.simpleMessage("実行中"),
+    "rootPhaseCleanupFailed": MessageLookupByLibrary.simpleMessage(
+      "ネットワークの復旧が完了していません",
+    ),
+    "rootPhaseFailed": MessageLookupByLibrary.simpleMessage(
+      "Root による通信取得に失敗しました",
+    ),
+    "rootPhaseStarting": MessageLookupByLibrary.simpleMessage(
+      "Root による通信取得を準備中",
+    ),
+    "rootPhaseStopped": MessageLookupByLibrary.simpleMessage("停止中"),
+    "rootPhaseWaitingHotspot": MessageLookupByLibrary.simpleMessage(
+      "テザリングの開始を待機中",
+    ),
+    "rootPhaseWaitingHotspotRestart": MessageLookupByLibrary.simpleMessage(
+      "テザリングの通信はまだ取得されていません",
+    ),
+    "rootProxy": MessageLookupByLibrary.simpleMessage("Root 透過プロキシ"),
+    "rootProxyDescription": MessageLookupByLibrary.simpleMessage(
+      "この端末とテザリング端末の通信を代理",
+    ),
+    "rootProxyEnable": MessageLookupByLibrary.simpleMessage(
+      "Root 透過プロキシを有効にする",
+    ),
+    "rootProxyHotspot": MessageLookupByLibrary.simpleMessage("テザリングの通信"),
+    "rootProxyLocal": MessageLookupByLibrary.simpleMessage("この端末の通信"),
+    "rootProxyLocalDescription": MessageLookupByLibrary.simpleMessage(
+      "アプリのアクセス制御はこの端末のアプリにのみ適用されます",
+    ),
+    "rootRefreshStatus": MessageLookupByLibrary.simpleMessage("Root の状態を更新"),
+    "rootRepair": MessageLookupByLibrary.simpleMessage("プロキシを停止してネットワークを復旧"),
+    "rootRepairCompleted": MessageLookupByLibrary.simpleMessage(
+      "ネットワークを復旧しました",
+    ),
+    "rootRepairDescription": MessageLookupByLibrary.simpleMessage(
+      "ネットワークの復旧は現在のプロキシを停止してから、FlClash が作成した Root ルールとルートを削除します。",
+    ),
+    "rootSelectScopeTip": MessageLookupByLibrary.simpleMessage(
+      "この端末またはテザリングの通信を少なくとも1つ選んでください",
+    ),
+    "rootSessionStatus": MessageLookupByLibrary.simpleMessage("Root セッション"),
+    "rootSettingsSaveFailed": MessageLookupByLibrary.simpleMessage(
+      "Root プロキシ設定を保存できませんでした",
+    ),
+    "rootStatusReadFailed": MessageLookupByLibrary.simpleMessage(
+      "Root の状態を取得できませんでした",
+    ),
+    "rootStatusUnknown": MessageLookupByLibrary.simpleMessage("状態不明"),
+    "rootStopFailed": MessageLookupByLibrary.simpleMessage(
+      "プロキシが完全に停止していません。少し待ってから復旧してください",
+    ),
+    "rootUpstream": MessageLookupByLibrary.simpleMessage("上流ネットワーク"),
     "routeAddress": MessageLookupByLibrary.simpleMessage("ルートアドレス"),
     "routeExcludeAddress": MessageLookupByLibrary.simpleMessage("ルート除外アドレス"),
     "routingMark": MessageLookupByLibrary.simpleMessage("ルーティングマーク"),

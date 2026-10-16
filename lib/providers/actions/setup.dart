@@ -2,7 +2,7 @@ part of '../action.dart';
 
 enum _SetupTaskResult { completed, handoffToCoreRestart, failed }
 
-typedef _SetupInputs = (SetupState, PatchClashConfig, NetworkProps);
+typedef _SetupInputs = (SetupState, PatchClashConfig, NetworkProps, bool);
 
 class _RunRequest {
   final bool running;
@@ -29,6 +29,19 @@ class SetupAction extends _$SetupAction {
   var _pendingForceApply = false;
 
   bool get _isRunning => _startTime != null && _startTime!.isBeforeNow;
+
+  /// 运行中的 Root 会话在真正停止前，仍依赖当前 DNS 配置。
+  bool get _rootProxyEnabled =>
+      system.isAndroid &&
+      !ref.read(safeModeProvider) &&
+      (ref.read(vpnSettingProvider).rootEnabled ||
+          ref.read(runningVpnOptionsProvider)?.rootEnabled == true);
+
+  /// 期望模式与仍在清理的运行模式分别判断，避免切回 VPN 时重走 Root 启动。
+  bool get _rootProxyRequested =>
+      system.isAndroid &&
+      !ref.read(safeModeProvider) &&
+      ref.read(vpnSettingProvider).rootEnabled;
 
   @override
   void build() {
@@ -162,6 +175,9 @@ class SetupAction extends _$SetupAction {
   }
 
   Future<bool> _start(_RunRequest request) async {
+    if (_rootProxyRequested) {
+      return _startRootProxy(request);
+    }
     if (request.initialize) {
       var applied = false;
       try {
@@ -188,6 +204,25 @@ class SetupAction extends _$SetupAction {
       applyProfileDebounce(force: true, silence: true);
     }
     return true;
+  }
+
+  /// Root 先应用配置，再安装系统路由，避免接管后才发现配置无效。
+  Future<bool> _startRootProxy(_RunRequest request) async {
+    try {
+      final applied = await applyProfile(force: true);
+      if (!_isCurrent(request)) return false;
+      if (!applied) {
+        await setRunning(false);
+        return false;
+      }
+      await _setCoreRunning(request);
+      return _isCurrent(request);
+    } catch (_) {
+      if (_isCurrent(request)) {
+        await setRunning(false);
+      }
+      rethrow;
+    }
   }
 
   Future<bool> _stop(_RunRequest request) async {
@@ -231,9 +266,28 @@ class SetupAction extends _$SetupAction {
 
   /// An excluded SSID parks the listener without ending the run.
   void syncSuspend() {
-    debouncer.call(FunctionTag.suspend, () {
+    debouncer.call(FunctionTag.suspend, () async {
+      final request = _latestRunRequest;
+      final prepareRoot = _rootProxyRequested && !ref.read(suspendProvider);
+      if (prepareRoot) {
+        // 配置应用不能放在监听队列内，初始化配置的预加载也会等待该队列。
+        final applied = await applyProfile(force: true);
+        if (!applied) {
+          if (identical(request, _latestRunRequest) &&
+              ref.read(isStartProvider)) {
+            await setRunning(false);
+          }
+          return;
+        }
+      }
       return _listenerScheduler.run(() async {
-        if (!ref.read(isStartProvider) || ref.read(safeModeProvider)) {
+        if (!ref.read(isStartProvider) ||
+            ref.read(safeModeProvider) ||
+            !identical(request, _latestRunRequest)) {
+          return;
+        }
+        if (!ref.read(suspendProvider) && _rootProxyRequested && !prepareRoot) {
+          syncSuspend();
           return;
         }
         await _setListening(!ref.read(suspendProvider));
@@ -245,8 +299,13 @@ class SetupAction extends _$SetupAction {
     if (!ref.read(isStartProvider)) {
       return;
     }
-    await setRunning(false);
-    await setRunning(true);
+    final stopping = setRunning(false);
+    final stopRequest = _latestRunRequest;
+    final stopped = await stopping;
+    // Root 清理可能等待数秒，期间更新的停止意图优先于本次重启。
+    if (stopped && identical(stopRequest, _latestRunRequest)) {
+      await setRunning(true);
+    }
   }
 
   void _rollbackRunning(_RunRequest request) {
@@ -341,6 +400,7 @@ class SetupAction extends _$SetupAction {
           setupState,
           _effectivePatchConfig(ref.read(patchClashConfigProvider)),
           ref.read(networkSettingProvider),
+          _rootProxyEnabled,
         );
   }
 
@@ -460,6 +520,7 @@ class SetupAction extends _$SetupAction {
         authentication: networkSetting.authentication.credentials,
         matchTarget: setupState.matchTarget,
         safeMode: ref.read(safeModeProvider),
+        rootProxy: _rootProxyEnabled,
       ),
     );
     return res;
@@ -646,6 +707,7 @@ class SetupAction extends _$SetupAction {
         state,
         realPatchConfig,
         networkSetting,
+        _rootProxyEnabled,
       ),
       _ => null,
     };

@@ -9,6 +9,7 @@ import 'package:fl_clash/views/access.dart';
 import 'package:fl_clash/views/backup_and_restore.dart';
 import 'package:fl_clash/views/config/general.dart';
 import 'package:fl_clash/views/hotkey.dart';
+import 'package:fl_clash/views/transparent_proxy/index.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +17,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'config/advanced.dart';
 import 'config/custom_resources.dart';
 import 'developer.dart';
-import 'disclaimer.dart';
+import 'personalization.dart';
 import 'theme.dart';
 
 class ToolsView extends ConsumerStatefulWidget {
@@ -40,7 +41,6 @@ class _ToolViewState extends ConsumerState<ToolsView> {
     return generateSection(
       title: context.appLocalizations.other,
       items: [
-        const _DisclaimerItem(),
         if (enableDeveloperMode) const _DeveloperItem(),
         const _InfoItem(),
       ],
@@ -53,9 +53,11 @@ class _ToolViewState extends ConsumerState<ToolsView> {
       items: [
         const _LocaleItem(),
         const _ThemeItem(),
+        const _PersonalizationItem(),
         const _BackupItem(),
         if (system.isDesktop) const _HotkeyItem(),
         if (system.isAndroid) const _AccessItem(),
+        if (system.isAndroid) const _TransparentProxyItem(),
         const _AdvancedConfigItem(),
         const _CustomResourcesItem(),
         const _GeneralItem(),
@@ -150,6 +152,20 @@ class _ThemeItem extends StatelessWidget {
   }
 }
 
+class _PersonalizationItem extends StatelessWidget {
+  const _PersonalizationItem();
+
+  /// 个性化使用独立页面，入口紧邻现有主题设置。
+  @override
+  Widget build(BuildContext context) {
+    return ListItem.open(
+      leading: const GlyphIcon(AppGlyphs.customize),
+      title: Text(context.appLocalizations.personalization),
+      widget: const PersonalizationView(),
+    );
+  }
+}
+
 class _BackupItem extends StatelessWidget {
   const _BackupItem();
 
@@ -191,6 +207,21 @@ class _AccessItem extends StatelessWidget {
   }
 }
 
+class _TransparentProxyItem extends StatelessWidget {
+  const _TransparentProxyItem();
+
+  /// Root 工具页只在 Android 展示，沿用现有页面导航。
+  @override
+  Widget build(BuildContext context) {
+    return ListItem.open(
+      leading: const GlyphIcon(AppGlyphs.key),
+      title: Text(context.appLocalizations.rootProxy),
+      subtitle: Text(context.appLocalizations.rootProxyDescription),
+      widget: const TransparentProxyView(),
+    );
+  }
+}
+
 class _GeneralItem extends StatelessWidget {
   const _GeneralItem();
 
@@ -228,19 +259,6 @@ class _CustomResourcesItem extends StatelessWidget {
       title: Text(context.appLocalizations.customProfileResources),
       subtitle: Text(context.appLocalizations.customProfileResourcesDesc),
       widget: const CustomResourcesView(),
-    );
-  }
-}
-
-class _DisclaimerItem extends StatelessWidget {
-  const _DisclaimerItem();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListItem.open(
-      leading: const GlyphIcon(AppGlyphs.gavel),
-      title: Text(context.appLocalizations.disclaimer),
-      widget: const DisclaimerView(),
     );
   }
 }

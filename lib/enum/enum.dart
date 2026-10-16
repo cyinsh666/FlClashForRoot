@@ -493,7 +493,8 @@ enum DashboardWidget {
   connections,
   runTime,
   proxyGroups,
-  profiles;
+  profiles,
+  rootProxyStatus(platforms: [SupportPlatform.Android]);
 
   final List<SupportPlatform> platforms;
 

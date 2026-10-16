@@ -405,6 +405,36 @@ class AppLocalizations {
     );
   }
 
+  /// `Personalization`
+  String get personalization {
+    return Intl.message(
+      'Personalization',
+      name: 'personalization',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hide quick start`
+  String get hideQuickStart {
+    return Intl.message(
+      'Hide quick start',
+      name: 'hideQuickStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use a dashboard long press instead`
+  String get hideQuickStartDesc {
+    return Intl.message(
+      'Use a dashboard long press instead',
+      name: 'hideQuickStartDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Extend`
   String get extend {
     return Intl.message('Extend', name: 'extend', desc: '', args: []);
@@ -2370,361 +2400,6 @@ class AppLocalizations {
     return Intl.message(
       'Update profiles',
       name: 'actionUpdateProfiles',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Disclaimer`
-  String get disclaimer {
-    return Intl.message('Disclaimer', name: 'disclaimer', desc: '', args: []);
-  }
-
-  /// `Before using FlClash ("the Software"), please read this statement carefully and make sure you understand all of it. Tapping "Agree" means you have read, understood, and accept every term below. If you do not agree, tap "Exit" and stop using the Software.`
-  String get disclaimerDesc {
-    return Intl.message(
-      'Before using FlClash ("the Software"), please read this statement carefully and make sure you understand all of it. Tapping "Agree" means you have read, understood, and accept every term below. If you do not agree, tap "Exit" and stop using the Software.',
-      name: 'disclaimerDesc',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Nature of the software`
-  String get disclaimerSoftwareTitle {
-    return Intl.message(
-      'Nature of the software',
-      name: 'disclaimerSoftwareTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The Software is an open-source network proxy client built on the Clash.Meta (mihomo) core. It only provides local tooling such as configuration management, rule-based routing, and traffic forwarding.`
-  String get disclaimerSoftwareContent {
-    return Intl.message(
-      'The Software is an open-source network proxy client built on the Clash.Meta (mihomo) core. It only provides local tooling such as configuration management, rule-based routing, and traffic forwarding.',
-      name: 'disclaimerSoftwareContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The Software itself does not provide any proxy server, node, subscription, or network access service, and has no partnership, agency, or guarantee relationship with any provider of such services.`
-  String get disclaimerNoServiceStatement {
-    return Intl.message(
-      'The Software itself does not provide any proxy server, node, subscription, or network access service, and has no partnership, agency, or guarantee relationship with any provider of such services.',
-      name: 'disclaimerNoServiceStatement',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Restrictions on use`
-  String get disclaimerUsageTitle {
-    return Intl.message(
-      'Restrictions on use',
-      name: 'disclaimerUsageTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The Software is intended only for non-commercial uses such as learning, exchange, and technical research. Using it for any commercial purpose is strictly prohibited, including but not limited to paid distribution, bundled sales, use as part of a commercial service, or doing business in the name of the Software. Any commercial activity is unrelated to the Software and its developers.\n\nUsing the Software for anything that violates the laws and regulations of your country or region is strictly prohibited, including but not limited to bypassing lawfully imposed network access restrictions, spreading illegal content, launching network attacks, or infringing the lawful rights of others.`
-  String get disclaimerUsageContent {
-    return Intl.message(
-      'The Software is intended only for non-commercial uses such as learning, exchange, and technical research. Using it for any commercial purpose is strictly prohibited, including but not limited to paid distribution, bundled sales, use as part of a commercial service, or doing business in the name of the Software. Any commercial activity is unrelated to the Software and its developers.\n\nUsing the Software for anything that violates the laws and regulations of your country or region is strictly prohibited, including but not limited to bypassing lawfully imposed network access restrictions, spreading illegal content, launching network attacks, or infringing the lawful rights of others.',
-      name: 'disclaimerUsageContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Your responsibility`
-  String get disclaimerResponsibilityTitle {
-    return Intl.message(
-      'Your responsibility',
-      name: 'disclaimerResponsibilityTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You are responsible for making sure that using the Software is lawful where you live, and you alone bear the legal responsibility for everything you do with it and its consequences.\n\nThe subscriptions, nodes, and configurations you import are your own choice. Whether their source is lawful, their content is safe, and their service is reliable is a matter between you and their providers.`
-  String get disclaimerResponsibilityContent {
-    return Intl.message(
-      'You are responsible for making sure that using the Software is lawful where you live, and you alone bear the legal responsibility for everything you do with it and its consequences.\n\nThe subscriptions, nodes, and configurations you import are your own choice. Whether their source is lawful, their content is safe, and their service is reliable is a matter between you and their providers.',
-      name: 'disclaimerResponsibilityContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Third-party content`
-  String get disclaimerThirdPartyTitle {
-    return Intl.message(
-      'Third-party content',
-      name: 'disclaimerThirdPartyTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Subscription links, configuration files, rule sets, scripts, external resources, and external links are all provided by third parties. The developers cannot and do not review or guarantee their legality, accuracy, security, or availability.\n\nAny data leak, financial loss, account ban, or other loss caused by third-party content is to be settled between you and the third party; the developers bear no responsibility for it.`
-  String get disclaimerThirdPartyContent {
-    return Intl.message(
-      'Subscription links, configuration files, rule sets, scripts, external resources, and external links are all provided by third parties. The developers cannot and do not review or guarantee their legality, accuracy, security, or availability.\n\nAny data leak, financial loss, account ban, or other loss caused by third-party content is to be settled between you and the third party; the developers bear no responsibility for it.',
-      name: 'disclaimerThirdPartyContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No warranty`
-  String get disclaimerWarrantyTitle {
-    return Intl.message(
-      'No warranty',
-      name: 'disclaimerWarrantyTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The Software is provided "as is" and "as available", without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, uninterrupted availability, freedom from errors, or freedom from security vulnerabilities.\n\nThe developers do not guarantee that the Software will meet your needs or that it will run without interruption or error.`
-  String get disclaimerWarrantyContent {
-    return Intl.message(
-      'The Software is provided "as is" and "as available", without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, non-infringement, uninterrupted availability, freedom from errors, or freedom from security vulnerabilities.\n\nThe developers do not guarantee that the Software will meet your needs or that it will run without interruption or error.',
-      name: 'disclaimerWarrantyContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Limitation of liability`
-  String get disclaimerLiabilityTitle {
-    return Intl.message(
-      'Limitation of liability',
-      name: 'disclaimerLiabilityTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `To the maximum extent permitted by applicable law, neither the developers nor any contributor shall be liable for any direct, indirect, incidental, special, punitive, or consequential damages arising from the use of or inability to use the Software, including but not limited to data loss, device damage, network failures, business interruption, lost profits, or any resulting legal dispute, even if advised of the possibility of such damages.`
-  String get disclaimerLiabilityContent {
-    return Intl.message(
-      'To the maximum extent permitted by applicable law, neither the developers nor any contributor shall be liable for any direct, indirect, incidental, special, punitive, or consequential damages arising from the use of or inability to use the Software, including but not limited to data loss, device damage, network failures, business interruption, lost profits, or any resulting legal dispute, even if advised of the possibility of such damages.',
-      name: 'disclaimerLiabilityContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Data collection and privacy`
-  String get disclaimerPrivacyTitle {
-    return Intl.message(
-      'Data collection and privacy',
-      name: 'disclaimerPrivacyTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The Software does not collect or upload your subscription URLs, node details, configuration content, visited websites, connection records, traffic content, or logs. This data stays on your device and the developers have no access to it.\n\nThe Software only reaches the network when you use a feature that needs it, such as fetching the subscription URL you provided when updating a profile, or contacting GitHub when checking for updates.\n\nThe desktop versions (Windows, macOS, Linux) include no analytics or crash reporting service. The Android version includes the following two Google Firebase services to improve stability:`
-  String get disclaimerPrivacyContent {
-    return Intl.message(
-      'The Software does not collect or upload your subscription URLs, node details, configuration content, visited websites, connection records, traffic content, or logs. This data stays on your device and the developers have no access to it.\n\nThe Software only reaches the network when you use a feature that needs it, such as fetching the subscription URL you provided when updating a profile, or contacting GitHub when checking for updates.\n\nThe desktop versions (Windows, macOS, Linux) include no analytics or crash reporting service. The Android version includes the following two Google Firebase services to improve stability:',
-      name: 'disclaimerPrivacyContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Firebase Crashlytics (crash analytics)`
-  String get disclaimerCrashlyticsTitle {
-    return Intl.message(
-      'Firebase Crashlytics (crash analytics)',
-      name: 'disclaimerCrashlyticsTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `When the app crashes, a crash report is uploaded automatically.\n\nWhat is collected: the crash stack trace and error message, the time of the crash, the app version and build number, the device brand and model, the Android version, screen orientation, free memory and storage, whether the device is rooted, and a random installation ID that is created on install and reset on reinstall.\n\nPurpose: only to locate and fix crashes.\n\nYou can turn it off at any time under "Tools > General > Crash analytics".`
-  String get disclaimerCrashlyticsContent {
-    return Intl.message(
-      'When the app crashes, a crash report is uploaded automatically.\n\nWhat is collected: the crash stack trace and error message, the time of the crash, the app version and build number, the device brand and model, the Android version, screen orientation, free memory and storage, whether the device is rooted, and a random installation ID that is created on install and reset on reinstall.\n\nPurpose: only to locate and fix crashes.\n\nYou can turn it off at any time under "Tools > General > Crash analytics".',
-      name: 'disclaimerCrashlyticsContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Firebase Analytics (usage statistics)`
-  String get disclaimerAnalyticsTitle {
-    return Intl.message(
-      'Firebase Analytics (usage statistics)',
-      name: 'disclaimerAnalyticsTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Basic app usage statistics are collected automatically with Firebase.\n\nWhat is collected: basic events such as first launch, app opens and session length, and app updates; an app instance ID; the device model, OS version, and system language; and an approximate country- or region-level location inferred from the IP address.\n\nPurpose: only to understand the number of active devices, version distribution, and OS compatibility. The developers do not use this data for advertising, do not sell it, and do not link it to your subscriptions or configurations.`
-  String get disclaimerAnalyticsContent {
-    return Intl.message(
-      'Basic app usage statistics are collected automatically with Firebase.\n\nWhat is collected: basic events such as first launch, app opens and session length, and app updates; an app instance ID; the device model, OS version, and system language; and an approximate country- or region-level location inferred from the IP address.\n\nPurpose: only to understand the number of active devices, version distribution, and OS compatibility. The developers do not use this data for advertising, do not sell it, and do not link it to your subscriptions or configurations.',
-      name: 'disclaimerAnalyticsContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `This data is processed and stored by Google on our behalf, may be transferred to servers outside your country or region (such as in the United States), and is governed by the Google Privacy Policy and the Firebase privacy and security documentation. Crash reports are kept for up to 90 days; statistics are kept under the Firebase default retention policy.`
-  String get disclaimerDataProcessingContent {
-    return Intl.message(
-      'This data is processed and stored by Google on our behalf, may be transferred to servers outside your country or region (such as in the United States), and is governed by the Google Privacy Policy and the Firebase privacy and security documentation. Crash reports are kept for up to 90 days; statistics are kept under the Firebase default retention policy.',
-      name: 'disclaimerDataProcessingContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Open-source license`
-  String get disclaimerLicenseTitle {
-    return Intl.message(
-      'Open-source license',
-      name: 'disclaimerLicenseTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The Software is open source under the GPL-3.0 license. You may use, modify, and distribute it freely as long as you comply with that license, which requires derivative works to be released under GPL-3.0 as well and the original copyright notices to be kept.\n\nThird-party components in the Software, including the Clash.Meta core, follow their own licenses. The original authors are not responsible for any issue arising from modified or redistributed versions.`
-  String get disclaimerLicenseContent {
-    return Intl.message(
-      'The Software is open source under the GPL-3.0 license. You may use, modify, and distribute it freely as long as you comply with that license, which requires derivative works to be released under GPL-3.0 as well and the original copyright notices to be kept.\n\nThird-party components in the Software, including the Clash.Meta core, follow their own licenses. The original authors are not responsible for any issue arising from modified or redistributed versions.',
-      name: 'disclaimerLicenseContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Changes to this statement`
-  String get disclaimerChangesTitle {
-    return Intl.message(
-      'Changes to this statement',
-      name: 'disclaimerChangesTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The developers may revise this statement with any release, and the revision takes effect when that release is published. Continuing to use the Software after updating means you accept the revised statement.`
-  String get disclaimerChangesContent {
-    return Intl.message(
-      'The developers may revise this statement with any release, and the revision takes effect when that release is published. Continuing to use the Software after updating means you accept the revised statement.',
-      name: 'disclaimerChangesContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Acceptance`
-  String get disclaimerAcceptTitle {
-    return Intl.message(
-      'Acceptance',
-      name: 'disclaimerAcceptTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `By installing, copying, or using the Software, you are deemed to have read and agreed to this entire statement. If you disagree with any of its terms, stop using and uninstall the Software immediately.`
-  String get disclaimerAcceptContent {
-    return Intl.message(
-      'By installing, copying, or using the Software, you are deemed to have read and agreed to this entire statement. If you disagree with any of its terms, stop using and uninstall the Software immediately.',
-      name: 'disclaimerAcceptContent',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Android only`
-  String get disclaimerAndroidOnly {
-    return Intl.message(
-      'Android only',
-      name: 'disclaimerAndroidOnly',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Google Privacy Policy`
-  String get disclaimerGooglePrivacy {
-    return Intl.message(
-      'Google Privacy Policy',
-      name: 'disclaimerGooglePrivacy',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Firebase privacy and security`
-  String get disclaimerFirebasePrivacy {
-    return Intl.message(
-      'Firebase privacy and security',
-      name: 'disclaimerFirebasePrivacy',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Read to the end`
-  String get disclaimerReadToEnd {
-    return Intl.message(
-      'Read to the end',
-      name: 'disclaimerReadToEnd',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Restate the statement`
-  String get disclaimerRestateTitle {
-    return Intl.message(
-      'Restate the statement',
-      name: 'disclaimerRestateTitle',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `To confirm you understand, enter the following statement in full in the field below:`
-  String get disclaimerRestateTip {
-    return Intl.message(
-      'To confirm you understand, enter the following statement in full in the field below:',
-      name: 'disclaimerRestateTip',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Enter the statement above`
-  String get disclaimerRestateHint {
-    return Intl.message(
-      'Enter the statement above',
-      name: 'disclaimerRestateHint',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Does not match the statement`
-  String get disclaimerRestateMismatch {
-    return Intl.message(
-      'Does not match the statement',
-      name: 'disclaimerRestateMismatch',
       desc: '',
       args: [],
     );
@@ -7582,6 +7257,421 @@ class AppLocalizations {
     return Intl.message(
       'This profile is encrypted with age and needs an age secret key to decrypt',
       name: 'ageSecretKeyRequiredTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Root transparent proxy`
+  String get rootProxy {
+    return Intl.message(
+      'Root transparent proxy',
+      name: 'rootProxy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Proxy this device and hotspot clients`
+  String get rootProxyDescription {
+    return Intl.message(
+      'Proxy this device and hotspot clients',
+      name: 'rootProxyDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enable Root transparent proxy`
+  String get rootProxyEnable {
+    return Intl.message(
+      'Enable Root transparent proxy',
+      name: 'rootProxyEnable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Device traffic`
+  String get rootProxyLocal {
+    return Intl.message(
+      'Device traffic',
+      name: 'rootProxyLocal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Uses app access control for local apps only`
+  String get rootProxyLocalDescription {
+    return Intl.message(
+      'Uses app access control for local apps only',
+      name: 'rootProxyLocalDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hotspot traffic`
+  String get rootProxyHotspot {
+    return Intl.message(
+      'Hotspot traffic',
+      name: 'rootProxyHotspot',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hotspot interface`
+  String get rootHotspotInterface {
+    return Intl.message(
+      'Hotspot interface',
+      name: 'rootHotspotInterface',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave empty to detect automatically, or enter a name such as ap0`
+  String get rootHotspotInterfaceDescription {
+    return Intl.message(
+      'Leave empty to detect automatically, or enter a name such as ap0',
+      name: 'rootHotspotInterfaceDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Use up to 15 letters, digits, or _ . : - for the interface name`
+  String get rootInterfaceInvalid {
+    return Intl.message(
+      'Use up to 15 letters, digits, or _ . : - for the interface name',
+      name: 'rootInterfaceInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Start the proxy from the dashboard after saving, or use the restart notice while running. Root and VPN modes are mutually exclusive; VPN settings are retained for switching back.`
+  String get rootConfigDescription {
+    return Intl.message(
+      'Start the proxy from the dashboard after saving, or use the restart notice while running. Root and VPN modes are mutually exclusive; VPN settings are retained for switching back.',
+      name: 'rootConfigDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select device traffic, hotspot traffic, or both`
+  String get rootSelectScopeTip {
+    return Intl.message(
+      'Select device traffic, hotspot traffic, or both',
+      name: 'rootSelectScopeTip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to save Root proxy settings`
+  String get rootSettingsSaveFailed {
+    return Intl.message(
+      'Failed to save Root proxy settings',
+      name: 'rootSettingsSaveFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Root proxy settings changed; restart the proxy to apply them`
+  String get rootConfigChangeDetected {
+    return Intl.message(
+      'Root proxy settings changed; restart the proxy to apply them',
+      name: 'rootConfigChangeDetected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Root session`
+  String get rootSessionStatus {
+    return Intl.message(
+      'Root session',
+      name: 'rootSessionStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Traffic captured`
+  String get rootActive {
+    return Intl.message(
+      'Traffic captured',
+      name: 'rootActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Traffic not captured`
+  String get rootInactive {
+    return Intl.message(
+      'Traffic not captured',
+      name: 'rootInactive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Upstream network`
+  String get rootUpstream {
+    return Intl.message(
+      'Upstream network',
+      name: 'rootUpstream',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hotspot interfaces and subnets`
+  String get rootDownstream {
+    return Intl.message(
+      'Hotspot interfaces and subnets',
+      name: 'rootDownstream',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not detected`
+  String get rootNotDetected {
+    return Intl.message(
+      'Not detected',
+      name: 'rootNotDetected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A Root session needs cleanup`
+  String get rootNeedsRepair {
+    return Intl.message(
+      'A Root session needs cleanup',
+      name: 'rootNeedsRepair',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to read Root status`
+  String get rootStatusReadFailed {
+    return Intl.message(
+      'Failed to read Root status',
+      name: 'rootStatusReadFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unknown status`
+  String get rootStatusUnknown {
+    return Intl.message(
+      'Unknown status',
+      name: 'rootStatusUnknown',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stopped`
+  String get rootPhaseStopped {
+    return Intl.message(
+      'Stopped',
+      name: 'rootPhaseStopped',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Preparing Root traffic capture`
+  String get rootPhaseStarting {
+    return Intl.message(
+      'Preparing Root traffic capture',
+      name: 'rootPhaseStarting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Running`
+  String get rootPhaseActive {
+    return Intl.message('Running', name: 'rootPhaseActive', desc: '', args: []);
+  }
+
+  /// `Waiting for the hotspot to turn on`
+  String get rootPhaseWaitingHotspot {
+    return Intl.message(
+      'Waiting for the hotspot to turn on',
+      name: 'rootPhaseWaitingHotspot',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hotspot traffic is not captured yet`
+  String get rootPhaseWaitingHotspotRestart {
+    return Intl.message(
+      'Hotspot traffic is not captured yet',
+      name: 'rootPhaseWaitingHotspotRestart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Root traffic capture failed`
+  String get rootPhaseFailed {
+    return Intl.message(
+      'Root traffic capture failed',
+      name: 'rootPhaseFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network recovery is incomplete`
+  String get rootPhaseCleanupFailed {
+    return Intl.message(
+      'Network recovery is incomplete',
+      name: 'rootPhaseCleanupFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Checks and recovery`
+  String get rootMaintenance {
+    return Intl.message(
+      'Checks and recovery',
+      name: 'rootMaintenance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Check Root access and capabilities`
+  String get rootCheck {
+    return Intl.message(
+      'Check Root access and capabilities',
+      name: 'rootCheck',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Root capability check result`
+  String get rootCapabilities {
+    return Intl.message(
+      'Root capability check result',
+      name: 'rootCapabilities',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Open system hotspot settings`
+  String get rootHotspotSettings {
+    return Intl.message(
+      'Open system hotspot settings',
+      name: 'rootHotspotSettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unable to open hotspot settings; open them in system settings`
+  String get rootHotspotSettingsUnavailable {
+    return Intl.message(
+      'Unable to open hotspot settings; open them in system settings',
+      name: 'rootHotspotSettingsUnavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop the proxy and restore the network`
+  String get rootRepair {
+    return Intl.message(
+      'Stop the proxy and restore the network',
+      name: 'rootRepair',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network recovery first stops the current proxy, then removes Root rules and routes created by FlClash.`
+  String get rootRepairDescription {
+    return Intl.message(
+      'Network recovery first stops the current proxy, then removes Root rules and routes created by FlClash.',
+      name: 'rootRepairDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Network recovery completed`
+  String get rootRepairCompleted {
+    return Intl.message(
+      'Network recovery completed',
+      name: 'rootRepairCompleted',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The proxy has not fully stopped; retry network recovery shortly`
+  String get rootStopFailed {
+    return Intl.message(
+      'The proxy has not fully stopped; retry network recovery shortly',
+      name: 'rootStopFailed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refresh Root status`
+  String get rootRefreshStatus {
+    return Intl.message(
+      'Refresh Root status',
+      name: 'rootRefreshStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `IP address policy`
+  String get rootAddressPolicy {
+    return Intl.message(
+      'IP address policy',
+      name: 'rootAddressPolicy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Root mode proxies IPv4 TCP/UDP and DNS in the selected scopes and blocks IPv6 there. IPv6 is not proxied. Unselected scopes keep their existing network behavior.`
+  String get rootAddressPolicyDescription {
+    return Intl.message(
+      'Root mode proxies IPv4 TCP/UDP and DNS in the selected scopes and blocks IPv6 there. IPv6 is not proxied. Unselected scopes keep their existing network behavior.',
+      name: 'rootAddressPolicyDescription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Transparent proxy`
+  String get rootDashboardStatus {
+    return Intl.message(
+      'Transparent proxy',
+      name: 'rootDashboardStatus',
       desc: '',
       args: [],
     );

@@ -132,6 +132,14 @@ func applyConfig(params *SetupParams) error {
 		cfg = fallback
 	}
 
+	// 后台快捷启动可能读取旧配置，Root 仍必须拥有 DNS 且只由原生服务安装路由。
+	if runtime.GOOS == "android" && params.RootProxy {
+		if len(cfg.DNS.NameServer) == 0 {
+			return errors.New("Root 透明代理缺少 DNS 上游，请打开应用重新应用配置")
+		}
+		cfg.DNS.Enable = true
+		cfg.IPTables.Enable = false
+	}
 	currentConfig = cfg
 	hub.ApplyConfig(cfg)
 	patchSelectGroup(params.SelectedMap)

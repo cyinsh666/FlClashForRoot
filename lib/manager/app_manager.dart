@@ -6,6 +6,7 @@ import 'package:fl_clash/enum/enum.dart';
 import 'package:fl_clash/models/models.dart';
 import 'package:fl_clash/providers/providers.dart';
 import 'package:fl_clash/state.dart';
+import 'package:fl_clash/views/dashboard/widgets/proxy_control_menu.dart';
 import 'package:fl_clash/widgets/animated_visibility.dart';
 import 'package:fl_clash/widgets/icon.dart';
 import 'package:fl_clash/widgets/sidebar.dart';
@@ -152,17 +153,36 @@ class _Sidebar extends ConsumerWidget {
   final ViewMode viewMode;
   final void Function(int index) onSelected;
 
+  /// 宽屏仪表盘导航提供相同的启停菜单，避免隐藏按钮后失去入口。
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final canExpand = canExpandSidebar(viewMode);
     final sidebarExpanded = ref.watch(
       appSettingProvider.select((state) => state.sidebarExpanded),
     );
+    final hideQuickStart = ref.watch(
+      appSettingProvider.select((state) => state.hideQuickStart),
+    );
+    final hasProfile = ref.watch(
+      profilesProvider.select((profiles) => profiles.isNotEmpty),
+    );
+    // 所有侧栏尺寸共用导航菜单数据，服务状态仍由现有 Provider 决定。
+    final proxyMenuItems = dashboardProxyControlMenuItems(
+      context,
+      ref,
+      enabled: hideQuickStart && hasProfile,
+    );
     final version = ref.watch(versionProvider);
     return NavigationSidebar(
       destinations: [
         for (final item in items)
-          SidebarDestination(glyph: item.glyph, label: item.label.label),
+          SidebarDestination(
+            glyph: item.glyph,
+            label: item.label.label,
+            menuItems: item.label == PageLabel.dashboard
+                ? proxyMenuItems
+                : null,
+          ),
       ],
       selectedIndex: currentIndex,
       expanded: canExpand && sidebarExpanded,

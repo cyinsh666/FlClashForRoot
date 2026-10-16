@@ -20,6 +20,8 @@ class CoreLib extends CoreHandlerInterface {
   int _lifecycleRevision = 0;
   int _methodCallId = 0;
   bool _closed = false;
+  // 停止 Root 时，先等原生撤销路由，再关闭内核监听。
+  bool _rootRunRequested = false;
 
   CoreLib._internal() : _service = service;
 
@@ -51,6 +53,12 @@ class CoreLib extends CoreHandlerInterface {
     final initializationError = await _service?.init() ?? '';
     if (initializationError.isNotEmpty) {
       throw StateError(initializationError);
+    }
+    if (_service != null) {
+      final rootStatus = await _service.rootStatus();
+      _rootRunRequested =
+          rootStatus['rootRunning'] == true ||
+          rootStatus['needsRepair'] == true;
     }
     await globalState.container.read(vpnOptionsProvider.future);
     _connectedCompleter.complete(true);
@@ -113,6 +121,18 @@ class CoreLib extends CoreHandlerInterface {
 
   @override
   Future<bool> startListener() async {
+    if (_service != null) {
+      final options = await globalState.container.read(
+        vpnOptionsProvider.future,
+      );
+      if (options.rootEnabled || _rootRunRequested) {
+        final syncError = await _service.syncState(
+          globalState.container.read(sharedStateProvider),
+        );
+        if (syncError.isNotEmpty) throw StateError(syncError);
+      }
+      _rootRunRequested = _rootRunRequested || options.rootEnabled;
+    }
     final listenerStarted = await super.startListener();
     final serviceStarted = await _service?.start() ?? false;
     return listenerStarted && serviceStarted;
@@ -120,7 +140,13 @@ class CoreLib extends CoreHandlerInterface {
 
   @override
   Future<bool> stopListener() async {
-    final serviceStopped = await _service?.stop() ?? false;
+    final serviceStopped = _rootRunRequested
+        ? await _service?.stopRoot() ?? false
+        : await _service?.stop() ?? false;
+    if (_rootRunRequested && !serviceStopped) {
+      throw StateError('Root proxy cleanup was not completed');
+    }
+    _rootRunRequested = false;
     final listenerStopped = await super.stopListener();
     return serviceStopped && listenerStopped;
   }

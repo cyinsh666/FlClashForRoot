@@ -288,6 +288,11 @@ Future<({String yaml, String md5})> _makeRealProfileTask(
     ),
   );
   rawConfig['dns'] = rawDns;
+  if (data.rootProxy && !data.safeMode) {
+    // 系统路由由 Root 服务管理，订阅不能再安装另一套接管规则。
+    rawConfig['iptables'] = {'enable': false};
+    rawConfig['dns']['enable'] = true;
+  }
   final ntpOverride = overrides.ntp.overrideJson(overrides.ntpOverrideKeys);
   if (ntpOverride.isNotEmpty) {
     final rawNtp = rawConfig['ntp'] is Map

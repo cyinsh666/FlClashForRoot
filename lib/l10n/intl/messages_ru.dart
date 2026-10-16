@@ -606,114 +606,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "discardChanges": MessageLookupByLibrary.simpleMessage(
       "Отменить изменения?",
     ),
-    "disclaimer": MessageLookupByLibrary.simpleMessage(
-      "Отказ от ответственности",
-    ),
-    "disclaimerAcceptContent": MessageLookupByLibrary.simpleMessage(
-      "Устанавливая, копируя или используя Программу, вы подтверждаете, что прочитали и приняли это заявление полностью. Если вы не согласны с каким-либо его условием, немедленно прекратите использование и удалите Программу.",
-    ),
-    "disclaimerAcceptTitle": MessageLookupByLibrary.simpleMessage(
-      "Принятие условий",
-    ),
-    "disclaimerAnalyticsContent": MessageLookupByLibrary.simpleMessage(
-      "Вместе с Firebase автоматически собирается базовая статистика использования приложения.\n\nЧто собирается: базовые события, такие как первый запуск, открытие приложения и длительность сеанса, обновление приложения; идентификатор экземпляра приложения; модель устройства, версия ОС и язык системы; приблизительное местоположение на уровне страны или региона, определённое по IP-адресу.\n\nЦель: только оценка числа активных устройств, распределения версий и совместимости с ОС. Разработчики не используют эти данные для рекламы, не продают их и не связывают с вашими подписками или конфигурациями.",
-    ),
-    "disclaimerAnalyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Analytics (статистика использования)",
-    ),
-    "disclaimerAndroidOnly": MessageLookupByLibrary.simpleMessage(
-      "Только Android",
-    ),
-    "disclaimerChangesContent": MessageLookupByLibrary.simpleMessage(
-      "Разработчики могут изменять это заявление в любом выпуске; изменения вступают в силу с момента публикации выпуска. Продолжая пользоваться Программой после обновления, вы принимаете изменённое заявление.",
-    ),
-    "disclaimerChangesTitle": MessageLookupByLibrary.simpleMessage(
-      "Изменения заявления",
-    ),
-    "disclaimerCrashlyticsContent": MessageLookupByLibrary.simpleMessage(
-      "При сбое приложения отчёт о сбое отправляется автоматически.\n\nЧто собирается: трассировка стека и сообщение об ошибке, время сбоя, версия и номер сборки приложения, производитель и модель устройства, версия Android, ориентация экрана, свободная память и место в хранилище, наличие root-доступа, а также случайный идентификатор установки, который создаётся при установке и сбрасывается при переустановке.\n\nЦель: только поиск и исправление сбоев.\n\nВы можете отключить это в любой момент: «Инструменты > Общие > Аналитика сбоев».",
-    ),
-    "disclaimerCrashlyticsTitle": MessageLookupByLibrary.simpleMessage(
-      "Firebase Crashlytics (аналитика сбоев)",
-    ),
-    "disclaimerDataProcessingContent": MessageLookupByLibrary.simpleMessage(
-      "Эти данные обрабатываются и хранятся компанией Google от нашего имени, могут передаваться на серверы за пределами вашей страны или региона (например, в США) и регулируются Политикой конфиденциальности Google и документацией Firebase о конфиденциальности и безопасности. Отчёты о сбоях хранятся до 90 дней; статистика хранится в соответствии с политикой хранения Firebase по умолчанию.",
-    ),
-    "disclaimerDesc": MessageLookupByLibrary.simpleMessage(
-      "Перед использованием FlClash (далее — «Программа») внимательно прочитайте это заявление и убедитесь, что понимаете его полностью. Нажимая «Согласен», вы подтверждаете, что прочитали, поняли и принимаете все приведённые ниже условия. Если вы не согласны, нажмите «Выход» и прекратите использование Программы.",
-    ),
-    "disclaimerFirebasePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Конфиденциальность и безопасность Firebase",
-    ),
-    "disclaimerGooglePrivacy": MessageLookupByLibrary.simpleMessage(
-      "Политика конфиденциальности Google",
-    ),
-    "disclaimerLiabilityContent": MessageLookupByLibrary.simpleMessage(
-      "В максимальной степени, допустимой применимым законодательством, ни разработчики, ни участники проекта не несут ответственности за любой прямой, косвенный, случайный, особый, штрафной или последующий ущерб, возникший в результате использования или невозможности использования Программы, включая, помимо прочего, потерю данных, повреждение устройства, сбои сети, прерывание деятельности, упущенную выгоду или связанные с этим правовые споры, даже если они были предупреждены о возможности такого ущерба.",
-    ),
-    "disclaimerLiabilityTitle": MessageLookupByLibrary.simpleMessage(
-      "Ограничение ответственности",
-    ),
-    "disclaimerLicenseContent": MessageLookupByLibrary.simpleMessage(
-      "Программа распространяется с открытым исходным кодом по лицензии GPL-3.0. Вы можете свободно использовать, изменять и распространять её при соблюдении этой лицензии: производные работы также должны распространяться по GPL-3.0 с сохранением уведомлений об авторских правах.\n\nСторонние компоненты Программы, включая ядро Clash.Meta, распространяются по своим собственным лицензиям. Авторы оригинала не несут ответственности за проблемы, возникшие в изменённых или распространяемых третьими лицами версиях.",
-    ),
-    "disclaimerLicenseTitle": MessageLookupByLibrary.simpleMessage(
-      "Лицензия с открытым исходным кодом",
-    ),
-    "disclaimerNoServiceStatement": MessageLookupByLibrary.simpleMessage(
-      "Сама Программа не предоставляет прокси-серверы, узлы, подписки или услуги доступа к сети и не состоит в партнёрских, агентских или гарантийных отношениях с поставщиками таких услуг.",
-    ),
-    "disclaimerPrivacyContent": MessageLookupByLibrary.simpleMessage(
-      "Программа не собирает и не отправляет адреса ваших подписок, сведения об узлах, содержимое конфигураций, посещённые сайты, записи о подключениях, содержимое трафика и журналы. Эти данные хранятся только на вашем устройстве, и у разработчиков нет к ним доступа.\n\nПрограмма обращается к сети только при использовании соответствующих функций, например загружает указанный вами адрес подписки при обновлении профиля или обращается к GitHub при проверке обновлений.\n\nНастольные версии (Windows, macOS, Linux) не содержат никаких сервисов статистики или отчётов о сбоях. Версия для Android использует два сервиса Google Firebase для повышения стабильности:",
-    ),
-    "disclaimerPrivacyTitle": MessageLookupByLibrary.simpleMessage(
-      "Сбор данных и конфиденциальность",
-    ),
-    "disclaimerReadToEnd": MessageLookupByLibrary.simpleMessage(
-      "Дочитайте до конца",
-    ),
-    "disclaimerResponsibilityContent": MessageLookupByLibrary.simpleMessage(
-      "Вы самостоятельно убеждаетесь, что использование Программы законно в вашей стране или регионе, и единолично несёте юридическую ответственность за все действия с ней и их последствия.\n\nПодписки, узлы и конфигурации, которые вы импортируете, выбираете вы сами. Законность их источника, безопасность содержимого и надёжность сервиса — вопрос между вами и их поставщиками.",
-    ),
-    "disclaimerResponsibilityTitle": MessageLookupByLibrary.simpleMessage(
-      "Ваша ответственность",
-    ),
-    "disclaimerRestateHint": MessageLookupByLibrary.simpleMessage(
-      "Введите заявление выше",
-    ),
-    "disclaimerRestateMismatch": MessageLookupByLibrary.simpleMessage(
-      "Не совпадает с текстом заявления",
-    ),
-    "disclaimerRestateTip": MessageLookupByLibrary.simpleMessage(
-      "Чтобы подтвердить, что вы ознакомились с ним, полностью введите следующее заявление в поле ниже:",
-    ),
-    "disclaimerRestateTitle": MessageLookupByLibrary.simpleMessage(
-      "Повторите заявление",
-    ),
-    "disclaimerSoftwareContent": MessageLookupByLibrary.simpleMessage(
-      "Программа — это клиент сетевого прокси с открытым исходным кодом на основе ядра Clash.Meta (mihomo). Она предоставляет только локальные инструменты: управление конфигурациями, маршрутизацию по правилам и пересылку трафика.",
-    ),
-    "disclaimerSoftwareTitle": MessageLookupByLibrary.simpleMessage(
-      "Характер программы",
-    ),
-    "disclaimerThirdPartyContent": MessageLookupByLibrary.simpleMessage(
-      "Ссылки на подписки, файлы конфигурации, наборы правил, скрипты, внешние ресурсы и внешние ссылки предоставляются третьими лицами. Разработчики не могут проверять и не проверяют их законность, точность, безопасность и доступность и не дают на них никаких гарантий.\n\nУтечка данных, финансовые потери, блокировка аккаунта или иной ущерб, вызванные сторонним контентом, урегулируются между вами и третьим лицом; разработчики не несут за это никакой ответственности.",
-    ),
-    "disclaimerThirdPartyTitle": MessageLookupByLibrary.simpleMessage(
-      "Сторонний контент",
-    ),
-    "disclaimerUsageContent": MessageLookupByLibrary.simpleMessage(
-      "Программа предназначена только для некоммерческого использования: обучения, обмена опытом и технических исследований. Любое коммерческое использование строго запрещено, включая, помимо прочего, платное распространение, продажу в комплекте, использование в составе коммерческого сервиса или ведение деятельности от имени Программы. Любая коммерческая деятельность не имеет отношения к Программе и её разработчикам.\n\nСтрого запрещено использовать Программу для действий, нарушающих законы вашей страны или региона, включая, помимо прочего, обход законно установленных ограничений доступа к сети, распространение незаконной информации, сетевые атаки и нарушение законных прав других лиц.",
-    ),
-    "disclaimerUsageTitle": MessageLookupByLibrary.simpleMessage(
-      "Ограничения использования",
-    ),
-    "disclaimerWarrantyContent": MessageLookupByLibrary.simpleMessage(
-      "Программа предоставляется «как есть» и «по мере доступности», без каких-либо явных или подразумеваемых гарантий, включая, помимо прочего, гарантии товарной пригодности, пригодности для определённой цели, ненарушения прав, бесперебойной работы, отсутствия ошибок и уязвимостей.\n\nРазработчики не гарантируют, что Программа будет соответствовать вашим потребностям или работать без сбоев и ошибок.",
-    ),
-    "disclaimerWarrantyTitle": MessageLookupByLibrary.simpleMessage(
-      "Отсутствие гарантий",
-    ),
     "disconnected": MessageLookupByLibrary.simpleMessage("Отключено"),
     "discoverNewVersion": MessageLookupByLibrary.simpleMessage(
       "Доступна новая версия",
@@ -871,6 +763,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "hideFromList": MessageLookupByLibrary.simpleMessage("Скрыть из списка"),
     "hideIp": MessageLookupByLibrary.simpleMessage("Скрыть IP"),
     "hidePassword": MessageLookupByLibrary.simpleMessage("Скрыть пароль"),
+    "hideQuickStart": MessageLookupByLibrary.simpleMessage(
+      "Скрыть быстрый запуск",
+    ),
+    "hideQuickStartDesc": MessageLookupByLibrary.simpleMessage(
+      "Использовать долгое нажатие на панели",
+    ),
     "hideTimeoutProxies": MessageLookupByLibrary.simpleMessage(
       "Скрывать прокси с таймаутом",
     ),
@@ -1273,6 +1171,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "password": MessageLookupByLibrary.simpleMessage("Пароль"),
     "paste": MessageLookupByLibrary.simpleMessage("Вставить"),
     "peers": MessageLookupByLibrary.simpleMessage("Пиры"),
+    "personalization": MessageLookupByLibrary.simpleMessage("Персонализация"),
     "pickFromAlbum": MessageLookupByLibrary.simpleMessage("Выбрать из галереи"),
     "pinWindow": MessageLookupByLibrary.simpleMessage(
       "Закрепить поверх всех окон",
@@ -1447,6 +1346,118 @@ class MessageLookup extends MessageLookupByLibrary {
       "Восстановление выполнено",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("Повторить"),
+    "rootActive": MessageLookupByLibrary.simpleMessage(
+      "Трафик перехватывается",
+    ),
+    "rootAddressPolicy": MessageLookupByLibrary.simpleMessage(
+      "Политика IP-адресов",
+    ),
+    "rootAddressPolicyDescription": MessageLookupByLibrary.simpleMessage(
+      "Root проксирует IPv4 TCP/UDP и DNS в выбранных областях и блокирует там IPv6. IPv6 не проксируется. Для невыбранных областей поведение сети сохраняется.",
+    ),
+    "rootCapabilities": MessageLookupByLibrary.simpleMessage(
+      "Результат проверки возможностей Root",
+    ),
+    "rootCheck": MessageLookupByLibrary.simpleMessage(
+      "Проверить доступ Root и возможности",
+    ),
+    "rootConfigChangeDetected": MessageLookupByLibrary.simpleMessage(
+      "Настройки прокси Root изменены; перезапустите прокси для применения",
+    ),
+    "rootConfigDescription": MessageLookupByLibrary.simpleMessage(
+      "После сохранения запустите прокси на главной странице или используйте уведомление о перезапуске. Режимы Root и VPN взаимоисключающие; настройки VPN сохраняются.",
+    ),
+    "rootDashboardStatus": MessageLookupByLibrary.simpleMessage(
+      "Прозрачный прокси",
+    ),
+    "rootDownstream": MessageLookupByLibrary.simpleMessage(
+      "Интерфейсы и подсети точки доступа",
+    ),
+    "rootHotspotInterface": MessageLookupByLibrary.simpleMessage(
+      "Интерфейс точки доступа",
+    ),
+    "rootHotspotInterfaceDescription": MessageLookupByLibrary.simpleMessage(
+      "Оставьте пустым для автоопределения или укажите имя, например ap0",
+    ),
+    "rootHotspotSettings": MessageLookupByLibrary.simpleMessage(
+      "Открыть системные настройки точки доступа",
+    ),
+    "rootHotspotSettingsUnavailable": MessageLookupByLibrary.simpleMessage(
+      "Не удалось открыть настройки точки доступа; откройте их в системных настройках",
+    ),
+    "rootInactive": MessageLookupByLibrary.simpleMessage(
+      "Трафик не перехватывается",
+    ),
+    "rootInterfaceInvalid": MessageLookupByLibrary.simpleMessage(
+      "Имя интерфейса: до 15 букв, цифр или символов _ . : -",
+    ),
+    "rootMaintenance": MessageLookupByLibrary.simpleMessage(
+      "Проверка и восстановление",
+    ),
+    "rootNeedsRepair": MessageLookupByLibrary.simpleMessage(
+      "Сеанс Root требует очистки",
+    ),
+    "rootNotDetected": MessageLookupByLibrary.simpleMessage("Не обнаружено"),
+    "rootPhaseActive": MessageLookupByLibrary.simpleMessage("Работает"),
+    "rootPhaseCleanupFailed": MessageLookupByLibrary.simpleMessage(
+      "Восстановление сети не завершено",
+    ),
+    "rootPhaseFailed": MessageLookupByLibrary.simpleMessage(
+      "Ошибка перехвата трафика Root",
+    ),
+    "rootPhaseStarting": MessageLookupByLibrary.simpleMessage(
+      "Подготовка перехвата трафика Root",
+    ),
+    "rootPhaseStopped": MessageLookupByLibrary.simpleMessage("Остановлен"),
+    "rootPhaseWaitingHotspot": MessageLookupByLibrary.simpleMessage(
+      "Ожидание включения точки доступа",
+    ),
+    "rootPhaseWaitingHotspotRestart": MessageLookupByLibrary.simpleMessage(
+      "Трафик точки доступа ещё не перехватывается",
+    ),
+    "rootProxy": MessageLookupByLibrary.simpleMessage("Прозрачный прокси Root"),
+    "rootProxyDescription": MessageLookupByLibrary.simpleMessage(
+      "Прокси для устройства и клиентов точки доступа",
+    ),
+    "rootProxyEnable": MessageLookupByLibrary.simpleMessage(
+      "Включить прозрачный прокси Root",
+    ),
+    "rootProxyHotspot": MessageLookupByLibrary.simpleMessage(
+      "Трафик точки доступа",
+    ),
+    "rootProxyLocal": MessageLookupByLibrary.simpleMessage("Трафик устройства"),
+    "rootProxyLocalDescription": MessageLookupByLibrary.simpleMessage(
+      "Контроль доступа приложений действует только для локальных приложений",
+    ),
+    "rootRefreshStatus": MessageLookupByLibrary.simpleMessage(
+      "Обновить состояние Root",
+    ),
+    "rootRepair": MessageLookupByLibrary.simpleMessage(
+      "Остановить прокси и восстановить сеть",
+    ),
+    "rootRepairCompleted": MessageLookupByLibrary.simpleMessage(
+      "Восстановление сети завершено",
+    ),
+    "rootRepairDescription": MessageLookupByLibrary.simpleMessage(
+      "При восстановлении сети текущий прокси останавливается, затем удаляются правила и маршруты Root, созданные FlClash.",
+    ),
+    "rootSelectScopeTip": MessageLookupByLibrary.simpleMessage(
+      "Выберите трафик устройства, точки доступа или оба варианта",
+    ),
+    "rootSessionStatus": MessageLookupByLibrary.simpleMessage("Сеанс Root"),
+    "rootSettingsSaveFailed": MessageLookupByLibrary.simpleMessage(
+      "Не удалось сохранить настройки прокси Root",
+    ),
+    "rootStatusReadFailed": MessageLookupByLibrary.simpleMessage(
+      "Не удалось получить состояние Root",
+    ),
+    "rootStatusUnknown": MessageLookupByLibrary.simpleMessage(
+      "Состояние неизвестно",
+    ),
+    "rootStopFailed": MessageLookupByLibrary.simpleMessage(
+      "Прокси ещё не остановлен полностью; повторите восстановление сети позже",
+    ),
+    "rootUpstream": MessageLookupByLibrary.simpleMessage("Внешняя сеть"),
     "routeAddress": MessageLookupByLibrary.simpleMessage("Адреса маршрутов"),
     "routeExcludeAddress": MessageLookupByLibrary.simpleMessage(
       "Исключённые адреса маршрутов",

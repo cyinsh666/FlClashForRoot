@@ -4,6 +4,7 @@ import 'package:fl_clash/icons/icons.dart';
 import 'package:fl_clash/manager/app_manager.dart';
 import 'package:fl_clash/models/common.dart';
 import 'package:fl_clash/providers/providers.dart';
+import 'package:fl_clash/views/dashboard/widgets/proxy_control_menu.dart';
 import 'package:fl_clash/views/dashboard/widgets/start_button.dart';
 import 'package:fl_clash/widgets/widgets.dart';
 import 'package:flutter/foundation.dart';
@@ -67,6 +68,7 @@ class _HomeShell extends ConsumerWidget {
     ref.read(currentPageLabelProvider.notifier).toPage(pageLabel);
   }
 
+  /// 浮动导航中的快捷按钮遵循与仪表盘相同的个性化设置。
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(navigationStateProvider);
@@ -75,11 +77,21 @@ class _HomeShell extends ConsumerWidget {
     final floating = ref.watch(
       appSettingProvider.select((state) => state.floatingNavigationBar),
     );
+    // 手机浮动导航单独持有启动按钮，需同步隐藏这一入口。
+    final hideQuickStart = ref.watch(
+      appSettingProvider.select((state) => state.hideQuickStart),
+    );
     final hasProfile = ref.watch(
       profilesProvider.select((profiles) => profiles.isNotEmpty),
     );
     final isDashboard = ref.watch(
       shownPageLabelProvider.select((label) => label == PageLabel.dashboard),
+    );
+    // 菜单属于导航标签，在其它页面也能长按仪表盘操作代理。
+    final proxyMenu = dashboardProxyControlMenuItems(
+      context,
+      ref,
+      enabled: hideQuickStart && hasProfile,
     );
     return Material(
       color: context.colorScheme.surface,
@@ -112,13 +124,16 @@ class _HomeShell extends ConsumerWidget {
                             NavigationDockDestination(
                               glyph: item.glyph,
                               label: item.label.label,
+                              menuItems: item.label == PageLabel.dashboard
+                                  ? proxyMenu
+                                  : null,
                             ),
                         ],
                         selectedIndex: state.currentIndex,
                         onSelected: (index) {
                           _handleToPage(navigationItems[index].label, ref);
                         },
-                        trailing: hasProfile && isDashboard
+                        trailing: hasProfile && isDashboard && !hideQuickStart
                             ? const StartButton()
                             : null,
                       ),
@@ -134,12 +149,23 @@ class _HomeShell extends ConsumerWidget {
               child: NavigationBar(
                 destinations: [
                   for (final (index, item) in navigationItems.indexed)
-                    NavigationDestination(
-                      icon: AnimatedGlyph(
-                        glyph: item.glyph,
-                        filled: index == state.currentIndex,
+                    ContextMenuRegion(
+                      menuItems: item.label == PageLabel.dashboard
+                          ? proxyMenu
+                          : null,
+                      child: NavigationDestination(
+                        // Tooltip 的长按手势会抢先消费导航项的菜单事件。
+                        tooltip:
+                            item.label == PageLabel.dashboard &&
+                                proxyMenu != null
+                            ? ''
+                            : null,
+                        icon: AnimatedGlyph(
+                          glyph: item.glyph,
+                          filled: index == state.currentIndex,
+                        ),
+                        label: item.label.label,
                       ),
-                      label: item.label.label,
                     ),
                 ],
                 selectedIndex: state.currentIndex,

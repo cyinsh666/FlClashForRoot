@@ -162,6 +162,10 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
     final hasProfile = ref.watch(
       profilesProvider.select((state) => state.isNotEmpty),
     );
+    // 偏好与仪表盘布局分开观察，开关立即更新快捷按钮和长按菜单。
+    final hideQuickStart = ref.watch(
+      appSettingProvider.select((state) => state.hideQuickStart),
+    );
     final spacing = cardSpacing;
     final children = [
       ...dashboardState.dashboardWidgets
@@ -174,7 +178,9 @@ class _DashboardViewState extends ConsumerState<DashboardView> {
       (isEdit) => CommonScaffold(
         title: context.appLocalizations.dashboard,
         actions: _buildActions(isEdit),
-        floatingActionButton: hasProfile ? const StartButton() : null,
+        floatingActionButton: hasProfile && !hideQuickStart
+            ? const StartButton()
+            : null,
         body: Builder(
           builder: (context) {
             final padding = const EdgeInsets.all(16).copyWith(
